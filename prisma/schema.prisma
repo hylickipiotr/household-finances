@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum Color {
+  GRAY
+  RED
+  ORANGE
+  AMBER
+  YELLOW
+  LIME
+  GREEN
+  EMERALD
+  TEAL
+  CYAN
+  LIGHTBLUE
+  BLUE
+  INDIGO
+  VIOLET
+  PURPLE
+  FUCHSIA
+  PINK
+  ROSE
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  username     String        @unique
+  password     String
+  transactions Transaction[]
+}
+
+model Category {
+  id           Int           @id @default(autoincrement())
+  name         String
+  icon         String?
+  shops        Shop[]
+  transactions Transaction[]
+}
+
+model Shop {
+  id           Int           @id @default(autoincrement())
+  name         String
+  logoUrl      String?
+  isFavourite  Boolean       @default(false)
+  categoryId   Int?
+  category     Category?     @relation(fields: [categoryId], references: [id])
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          Int                @id @default(autoincrement())
+  name        String?
+  shopId      Int?
+  shop        Shop?              @relation(fields: [shopId], references: [id])
+  amount      Float
+  type        TransactionType
+  date        DateTime?
+  note        String?
+  isFavourite Boolean            @default(false)
+  categoryId  Int?
+  category    Category?          @relation(fields: [categoryId], references: [id])
+  authorId    Int
+  author      User               @relation(fields: [authorId], references: [id])
+  tags        TransactionTags[]
+  items       TransactionItems[]
+}
+
+model Tag {
+  id           Int               @id @default(autoincrement())
+  name         String
+  transactions TransactionTags[]
+}
+
+model Item {
+  id           Int                @id @default(autoincrement())
+  name         String
+  transactions TransactionItems[]
+}
+
+model Unit {
+  id    Int                @id @default(autoincrement())
+  name  String
+  items TransactionItems[]
+}
+
+model TransactionTags {
+  transactionId Int
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  tagId         Int
+  tag           Tag         @relation(fields: [tagId], references: [id])
+
+  @@id([transactionId, tagId])
+}
+
+model TransactionItems {
+  transactionId Int
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  itemId        Int
+  item          Item        @relation(fields: [itemId], references: [id])
+  quantity      Float?
+  unitId        Int?
+  unit          Unit?       @relation(fields: [unitId], references: [id])
+  amount        Float?
+
+  @@id([transactionId, itemId])
+}
+
+model Bookmark {
+  id          Int     @id @default(autoincrement())
+  name        String
+  query       String
+  icon        String?
+  isFavourite Boolean @default(false)
+  sort        Int?    @unique
+  color       Color?
+}
