@@ -1,8 +1,16 @@
 /// <reference types="next" />
 /// <reference types="next/types/global" />
 
-declare namespace NodeJS {
-  export interface ProcessEnv {
-    NODE_ENV: "development" | "production" | "test";
+import { PrismaClient } from ".prisma/client";
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      NODE_ENV: "development" | "production" | "test";
+    }
+
+    interface Global {
+      prisma: PrismaClient;
+    }
   }
 }

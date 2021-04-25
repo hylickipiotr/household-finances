@@ -1,3 +1,8 @@
-# Before installation
+# Inspiration
 
-1. Using Database client or GraphQL playground create an image and the seo object in database. After creating a single object, update variables in [db.const](./src/constants/db.ts)
+- [fullstack-graphql-next-nexus-prisma](https://github.com/hexrcs/fullstack-graphql-next-nexus-prisma)
+- [Graphql-nexus-prisma-nextjs](https://github.com/15chrjef/Graphql-nexus-prisma-nextjs)
+- [nextjs-prisma-apollo-nexus-starter](https://github.com/schester44/nextjs-prisma-apollo-nexus-starter)
+
+- Filtring
+  - [Crud default filtering?](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/501)
