@@ -1,1 +1,4 @@
 src/server/graphql/nexus-typegen.ts
+graphql.config.js
+tailwind.config.js
+src/client/graphql/types.generated.tsx

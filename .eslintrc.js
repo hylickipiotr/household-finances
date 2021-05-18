@@ -43,5 +43,6 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": 0,
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "off",
+    "jsx-a11y/anchor-is-valid": 0,
   },
 };

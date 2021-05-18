@@ -1,4 +1,4 @@
-import { fieldAuthorizePlugin, makeSchema } from "nexus";
+import { makeSchema } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import path from "path";
 import * as schemaTypes from "./schema";
@@ -12,17 +12,11 @@ export const schema = makeSchema({
     schema: path.join(outputPath, "schema.graphql"),
   },
   plugins: [
-    fieldAuthorizePlugin(),
     nexusPrisma({
       experimentalCRUD: true,
       paginationStrategy: "relay",
     }),
   ],
-  features: {
-    abstractTypeStrategies: {
-      resolveType: false,
-    },
-  },
   contextType: {
     module: path.join(outputPath, "context.ts"),
     export: "Context",

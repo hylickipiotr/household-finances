@@ -37,137 +37,53 @@ enum Color {
 }
 
 model User {
-  id          String @id @default(uuid())
+  id          String @id @default(cuid())
   username    String @unique
   displayName String
   password    String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  transactions    Transaction[]
-  categories      Category[]
-  shops           Shop[]
-  tags            Tag[]
-  bookmark        Bookmark[]
-  unit            Unit[]
-  transactionItem Item[]
-  transactionTags TransactionTags[]
-}
-
-model Category {
-  id           String        @id @default(uuid())
-  name         String
-  icon         String?
-  shops        Shop[]
-  transactions Transaction[]
-
-  creatorId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  creator User @relation(fields: [creatorId], references: [id])
-}
-
-model Shop {
-  id           String        @id @default(uuid())
-  name         String
-  logoUrl      String?
-  isFavourite  Boolean?      @default(false)
-  categoryId   String?
-  transactions Transaction[]
-
-  creatorId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  category Category? @relation(fields: [categoryId], references: [id])
-  creator  User      @relation(fields: [creatorId], references: [id])
-
 }
 
 model Transaction {
-  id          String            @id @default(uuid())
-  name        String
-  amount      Float
+  id          String            @id @default(cuid())
+  name        String?
+  amount      Float?
   type        TransactionType
   date        DateTime?
   note        String?
   isFavourite Boolean?          @default(false)
-  shopId      String?
-  categoryId  String?
   tags        TransactionTags[]
-  items       Item[]
 
-  creatorId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  shop     Shop?     @relation(fields: [shopId], references: [id])
-  category Category? @relation(fields: [categoryId], references: [id])
-  creator  User      @relation(fields: [creatorId], references: [id])
 }
 
 model Tag {
-  id           String            @id @default(uuid())
+  id           String            @id @default(cuid())
   name         String
   transactions TransactionTags[]
 
-  creatorId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  creator User @relation(fields: [creatorId], references: [id])
-}
-
-model Unit {
-  id    String @id @default(uuid())
-  name  String
-  items Item[]
-
-  creatorId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  creator User @relation(fields: [creatorId], references: [id])
 }
 
 model TransactionTags {
   transactionId String
   tagId         String
 
-  creatorId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   transaction Transaction @relation(fields: [transactionId], references: [id])
   tag         Tag         @relation(fields: [tagId], references: [id])
-  creator     User        @relation(fields: [creatorId], references: [id])
 
   @@id([transactionId, tagId])
 }
 
-model Item {
-  id            String  @default(uuid())
-  name          String
-  quantity      Float?
-  unitId        String?
-  amount        Float?
-  transactionId String
-
-  creatorId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  transaction Transaction @relation(fields: [transactionId], references: [id])
-  unit        Unit?       @relation(fields: [unitId], references: [id])
-  creator     User        @relation(fields: [creatorId], references: [id])
-
-  @@id([id, transactionId])
-}
-
 model Bookmark {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   name        String
   query       String
   icon        String?
@@ -175,9 +91,6 @@ model Bookmark {
   sort        Int?     @unique
   color       Color?
 
-  creatorId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  creator User @relation(fields: [creatorId], references: [id])
 }

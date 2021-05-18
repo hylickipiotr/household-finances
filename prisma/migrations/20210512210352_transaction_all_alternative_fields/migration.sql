@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Transaction" ALTER COLUMN "name" DROP NOT NULL,
+ALTER COLUMN "amount" DROP NOT NULL;

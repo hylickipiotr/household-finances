@@ -1,0 +1,11 @@
+fragment TransactionSnippet on Transaction {
+  id
+  name
+  amount
+  date
+  type
+  isFavourite
+  note
+  createdAt
+  updatedAt
+}
