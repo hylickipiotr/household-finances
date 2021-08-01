@@ -2,6 +2,91 @@
 ### Do not make changes to this file directly
 
 
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+type Category {
+  icon: String
+  id: String!
+  name: String!
+}
+
+input CategoryCreateInput {
+  Transaction: TransactionCreateNestedManyWithoutCategoryInput
+  icon: String
+  id: String
+  name: String!
+}
+
+input CategoryCreateNestedOneWithoutTransactionInput {
+  connect: CategoryWhereUniqueInput
+  connectOrCreate: CategoryCreateOrConnectWithoutTransactionInput
+  create: CategoryCreateWithoutTransactionInput
+}
+
+input CategoryCreateOrConnectWithoutTransactionInput {
+  create: CategoryCreateWithoutTransactionInput!
+  where: CategoryWhereUniqueInput!
+}
+
+input CategoryCreateWithoutTransactionInput {
+  icon: String
+  id: String
+  name: String!
+}
+
+input CategoryUpdateInput {
+  Transaction: TransactionUpdateManyWithoutCategoryInput
+  icon: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input CategoryUpdateOneRequiredWithoutTransactionInput {
+  connect: CategoryWhereUniqueInput
+  connectOrCreate: CategoryCreateOrConnectWithoutTransactionInput
+  create: CategoryCreateWithoutTransactionInput
+  update: CategoryUpdateWithoutTransactionInput
+  upsert: CategoryUpsertWithoutTransactionInput
+}
+
+input CategoryUpdateWithoutTransactionInput {
+  icon: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input CategoryUpsertWithoutTransactionInput {
+  create: CategoryCreateWithoutTransactionInput!
+  update: CategoryUpdateWithoutTransactionInput!
+}
+
+input CategoryWhereInput {
+  AND: [CategoryWhereInput!]
+  NOT: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  Transaction: TransactionListRelationFilter
+  icon: StringNullableFilter
+  id: StringFilter
+  name: StringFilter
+}
+
+input CategoryWhereUniqueInput {
+  id: String
+  name: String
+}
+
+type DateEdges {
+  max: String
+  min: String
+}
+
 scalar DateTime
 
 input DateTimeFieldUpdateOperationsInput {
@@ -19,13 +104,35 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
-input EnumTransactionTypeFieldUpdateOperationsInput {
-  set: TransactionType
+input FloatFieldUpdateOperationsInput {
+  decrement: Float
+  divide: Float
+  increment: Float
+  multiply: Float
+  set: Float
+}
+
+input FloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatFilter
+  notIn: [Float!]
 }
 
 type Mutation {
+  createOneCategory(data: CategoryCreateInput!): Category!
   createOneTransaction(data: TransactionCreateInput!): Transaction!
+  updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateOneTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
 input NestedDateTimeFilter {
@@ -37,6 +144,17 @@ input NestedDateTimeFilter {
   lte: DateTime
   not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input NestedFloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatFilter
+  notIn: [Float!]
 }
 
 input NestedStringFilter {
@@ -53,20 +171,18 @@ input NestedStringFilter {
   startsWith: String
 }
 
-input NullableBoolFieldUpdateOperationsInput {
-  set: Boolean
-}
-
-input NullableDateTimeFieldUpdateOperationsInput {
-  set: DateTime
-}
-
-input NullableFloatFieldUpdateOperationsInput {
-  decrement: Float
-  divide: Float
-  increment: Float
-  multiply: Float
-  set: Float
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 input NullableStringFieldUpdateOperationsInput {
@@ -74,13 +190,17 @@ input NullableStringFieldUpdateOperationsInput {
 }
 
 type Query {
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, where: CategoryWhereInput): [Category!]!
+  maxDate: DateTime
+  suggestTransactionTitle(query: String!): [String]
   transaction(where: TransactionWhereUniqueInput!): Transaction
-  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int): [Transaction!]!
+  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int, orderBy: [TransactionOrderByInput!], where: TransactionWhereInput): [Transaction!]!
+  transactionsDateEdges: DateEdges
 }
 
-enum QueryMode {
-  default
-  insensitive
+enum SortOrder {
+  asc
+  desc
 }
 
 input StringFieldUpdateOperationsInput {
@@ -96,184 +216,181 @@ input StringFilter {
   in: [String!]
   lt: String
   lte: String
-  mode: QueryMode
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
 }
 
-input TagCreateNestedOneWithoutTransactionsInput {
-  connect: TagWhereUniqueInput
-  connectOrCreate: TagCreateOrConnectWithoutTransactionsInput
-  create: TagCreateWithoutTransactionsInput
-}
-
-input TagCreateOrConnectWithoutTransactionsInput {
-  create: TagCreateWithoutTransactionsInput!
-  where: TagWhereUniqueInput!
-}
-
-input TagCreateWithoutTransactionsInput {
-  createdAt: DateTime
-  id: String
-  name: String!
-  updatedAt: DateTime
-}
-
-input TagUpdateOneRequiredWithoutTransactionsInput {
-  connect: TagWhereUniqueInput
-  connectOrCreate: TagCreateOrConnectWithoutTransactionsInput
-  create: TagCreateWithoutTransactionsInput
-  update: TagUpdateWithoutTransactionsInput
-  upsert: TagUpsertWithoutTransactionsInput
-}
-
-input TagUpdateWithoutTransactionsInput {
-  createdAt: DateTimeFieldUpdateOperationsInput
-  id: StringFieldUpdateOperationsInput
-  name: StringFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input TagUpsertWithoutTransactionsInput {
-  create: TagCreateWithoutTransactionsInput!
-  update: TagUpdateWithoutTransactionsInput!
-}
-
-input TagWhereUniqueInput {
-  id: String
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 type Transaction {
-  amount: Float
+  amount: Float!
+  category: Category!
   createdAt: DateTime!
-  date: DateTime
+  date: DateTime!
+  description: String
   id: String!
-  isFavourite: Boolean
-  name: String
-  note: String
-  type: TransactionType!
+  isIncome: Boolean!
+  title: String!
   updatedAt: DateTime!
 }
 
 input TransactionCreateInput {
-  amount: Float
+  amount: Float!
+  category: CategoryCreateNestedOneWithoutTransactionInput!
   createdAt: DateTime
-  date: DateTime
+  date: DateTime!
+  description: String
   id: String
-  isFavourite: Boolean
-  name: String
-  note: String
-  tags: TransactionTagsCreateNestedManyWithoutTransactionInput
-  type: TransactionType!
+  isIncome: Boolean!
+  title: String!
   updatedAt: DateTime
 }
 
-input TransactionTagsCreateManyTransactionInput {
+input TransactionCreateNestedManyWithoutCategoryInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutCategoryInput!]
+  create: [TransactionCreateWithoutCategoryInput!]
+}
+
+input TransactionCreateOrConnectWithoutCategoryInput {
+  create: TransactionCreateWithoutCategoryInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionCreateWithoutCategoryInput {
+  amount: Float!
   createdAt: DateTime
-  tagId: String!
+  date: DateTime!
+  description: String
+  id: String
+  isIncome: Boolean!
+  title: String!
   updatedAt: DateTime
 }
 
-input TransactionTagsCreateManyTransactionInputEnvelope {
-  data: [TransactionTagsCreateManyTransactionInput!]
-  skipDuplicates: Boolean
+input TransactionListRelationFilter {
+  every: TransactionWhereInput
+  none: TransactionWhereInput
+  some: TransactionWhereInput
 }
 
-input TransactionTagsCreateNestedManyWithoutTransactionInput {
-  connect: [TransactionTagsWhereUniqueInput!]
-  connectOrCreate: [TransactionTagsCreateOrConnectWithoutTransactionInput!]
-  create: [TransactionTagsCreateWithoutTransactionInput!]
-  createMany: TransactionTagsCreateManyTransactionInputEnvelope
+input TransactionOrderByInput {
+  amount: SortOrder
+  categoryId: SortOrder
+  createdAt: SortOrder
+  date: SortOrder
+  description: SortOrder
+  id: SortOrder
+  isIncome: SortOrder
+  title: SortOrder
+  updatedAt: SortOrder
 }
 
-input TransactionTagsCreateOrConnectWithoutTransactionInput {
-  create: TransactionTagsCreateWithoutTransactionInput!
-  where: TransactionTagsWhereUniqueInput!
-}
-
-input TransactionTagsCreateWithoutTransactionInput {
-  createdAt: DateTime
-  tag: TagCreateNestedOneWithoutTransactionsInput!
-  updatedAt: DateTime
-}
-
-input TransactionTagsScalarWhereInput {
-  AND: [TransactionTagsScalarWhereInput!]
-  NOT: [TransactionTagsScalarWhereInput!]
-  OR: [TransactionTagsScalarWhereInput!]
+input TransactionScalarWhereInput {
+  AND: [TransactionScalarWhereInput!]
+  NOT: [TransactionScalarWhereInput!]
+  OR: [TransactionScalarWhereInput!]
+  amount: FloatFilter
+  categoryId: StringFilter
   createdAt: DateTimeFilter
-  tagId: StringFilter
-  transactionId: StringFilter
+  date: DateTimeFilter
+  description: StringNullableFilter
+  id: StringFilter
+  isIncome: BoolFilter
+  title: StringFilter
   updatedAt: DateTimeFilter
 }
 
-input TransactionTagsTransactionIdTagIdCompoundUniqueInput {
-  tagId: String!
-  transactionId: String!
-}
-
-input TransactionTagsUpdateManyMutationInput {
-  createdAt: DateTimeFieldUpdateOperationsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input TransactionTagsUpdateManyWithWhereWithoutTransactionInput {
-  data: TransactionTagsUpdateManyMutationInput!
-  where: TransactionTagsScalarWhereInput!
-}
-
-input TransactionTagsUpdateManyWithoutTransactionInput {
-  connect: [TransactionTagsWhereUniqueInput!]
-  connectOrCreate: [TransactionTagsCreateOrConnectWithoutTransactionInput!]
-  create: [TransactionTagsCreateWithoutTransactionInput!]
-  createMany: TransactionTagsCreateManyTransactionInputEnvelope
-  delete: [TransactionTagsWhereUniqueInput!]
-  deleteMany: [TransactionTagsScalarWhereInput!]
-  disconnect: [TransactionTagsWhereUniqueInput!]
-  set: [TransactionTagsWhereUniqueInput!]
-  update: [TransactionTagsUpdateWithWhereUniqueWithoutTransactionInput!]
-  updateMany: [TransactionTagsUpdateManyWithWhereWithoutTransactionInput!]
-  upsert: [TransactionTagsUpsertWithWhereUniqueWithoutTransactionInput!]
-}
-
-input TransactionTagsUpdateWithWhereUniqueWithoutTransactionInput {
-  data: TransactionTagsUpdateWithoutTransactionInput!
-  where: TransactionTagsWhereUniqueInput!
-}
-
-input TransactionTagsUpdateWithoutTransactionInput {
-  createdAt: DateTimeFieldUpdateOperationsInput
-  tag: TagUpdateOneRequiredWithoutTransactionsInput
-  updatedAt: DateTimeFieldUpdateOperationsInput
-}
-
-input TransactionTagsUpsertWithWhereUniqueWithoutTransactionInput {
-  create: TransactionTagsCreateWithoutTransactionInput!
-  update: TransactionTagsUpdateWithoutTransactionInput!
-  where: TransactionTagsWhereUniqueInput!
-}
-
-input TransactionTagsWhereUniqueInput {
-  transactionId_tagId: TransactionTagsTransactionIdTagIdCompoundUniqueInput
-}
-
-enum TransactionType {
-  EXPENSE
-  INCOME
-}
-
 input TransactionUpdateInput {
-  amount: NullableFloatFieldUpdateOperationsInput
+  amount: FloatFieldUpdateOperationsInput
+  category: CategoryUpdateOneRequiredWithoutTransactionInput
   createdAt: DateTimeFieldUpdateOperationsInput
-  date: NullableDateTimeFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  isFavourite: NullableBoolFieldUpdateOperationsInput
-  name: NullableStringFieldUpdateOperationsInput
-  note: NullableStringFieldUpdateOperationsInput
-  tags: TransactionTagsUpdateManyWithoutTransactionInput
-  type: EnumTransactionTypeFieldUpdateOperationsInput
+  isIncome: BoolFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input TransactionUpdateManyMutationInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  isIncome: BoolFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input TransactionUpdateManyWithWhereWithoutCategoryInput {
+  data: TransactionUpdateManyMutationInput!
+  where: TransactionScalarWhereInput!
+}
+
+input TransactionUpdateManyWithoutCategoryInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutCategoryInput!]
+  create: [TransactionCreateWithoutCategoryInput!]
+  delete: [TransactionWhereUniqueInput!]
+  deleteMany: [TransactionScalarWhereInput!]
+  disconnect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
+  update: [TransactionUpdateWithWhereUniqueWithoutCategoryInput!]
+  updateMany: [TransactionUpdateManyWithWhereWithoutCategoryInput!]
+  upsert: [TransactionUpsertWithWhereUniqueWithoutCategoryInput!]
+}
+
+input TransactionUpdateWithWhereUniqueWithoutCategoryInput {
+  data: TransactionUpdateWithoutCategoryInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionUpdateWithoutCategoryInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  isIncome: BoolFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input TransactionUpsertWithWhereUniqueWithoutCategoryInput {
+  create: TransactionCreateWithoutCategoryInput!
+  update: TransactionUpdateWithoutCategoryInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionWhereInput {
+  AND: [TransactionWhereInput!]
+  NOT: [TransactionWhereInput!]
+  OR: [TransactionWhereInput!]
+  amount: FloatFilter
+  category: CategoryWhereInput
+  categoryId: StringFilter
+  createdAt: DateTimeFilter
+  date: DateTimeFilter
+  description: StringNullableFilter
+  id: StringFilter
+  isIncome: BoolFilter
+  title: StringFilter
+  updatedAt: DateTimeFilter
 }
 
 input TransactionWhereUniqueInput {

@@ -1,5 +1,8 @@
-query Transactions {
-  transactions {
+query Transactions(
+  $where: TransactionWhereInput
+  $orderBy: [TransactionOrderByInput!]
+) {
+  transactions(where: $where, orderBy: $orderBy) {
     ...TransactionSnippet
   }
 }

@@ -1,0 +1,6 @@
+query TransactionDateEdges {
+  transactionsDateEdges {
+    min
+    max
+  }
+}

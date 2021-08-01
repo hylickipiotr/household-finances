@@ -2,38 +2,12 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 generator client {
   provider = "prisma-client-js"
-}
-
-enum TransactionType {
-  INCOME
-  EXPENSE
-}
-
-enum Color {
-  GRAY
-  RED
-  ORANGE
-  AMBER
-  YELLOW
-  LIME
-  GREEN
-  EMERALD
-  TEAL
-  CYAN
-  LIGHTBLUE
-  BLUE
-  INDIGO
-  VIOLET
-  PURPLE
-  FUCHSIA
-  PINK
-  ROSE
 }
 
 model User {
@@ -47,50 +21,23 @@ model User {
 }
 
 model Transaction {
-  id          String            @id @default(cuid())
-  name        String?
-  amount      Float?
-  type        TransactionType
-  date        DateTime?
-  note        String?
-  isFavourite Boolean?          @default(false)
-  tags        TransactionTags[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Tag {
-  id           String            @id @default(cuid())
-  name         String
-  transactions TransactionTags[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model TransactionTags {
-  transactionId String
-  tagId         String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  transaction Transaction @relation(fields: [transactionId], references: [id])
-  tag         Tag         @relation(fields: [tagId], references: [id])
-
-  @@id([transactionId, tagId])
-}
-
-model Bookmark {
   id          String   @id @default(cuid())
-  name        String
-  query       String
-  icon        String?
-  isFavourite Boolean? @default(false)
-  sort        Int?     @unique
-  color       Color?
+  title       String
+  amount      Float
+  isIncome    Boolean
+  date        DateTime
+  description String?
+  category    Category @relation(fields: [categoryId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  categoryId String
+}
+
+model Category {
+  id   String  @id @default(cuid())
+  name String  @unique
+  icon String?
+
+  Transaction Transaction[]
 }

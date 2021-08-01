@@ -1,11 +1,12 @@
 fragment TransactionSnippet on Transaction {
   id
-  name
+  title
+  description
   amount
   date
-  type
-  isFavourite
-  note
+  isIncome
   createdAt
-  updatedAt
+  category {
+    ...CategorySnippet
+  }
 }

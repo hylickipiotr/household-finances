@@ -1,0 +1,5 @@
+fragment CategorySnippet on Category {
+  id
+  name
+  icon
+}
