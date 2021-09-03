@@ -348,10 +348,6 @@ export interface NexusGenObjects {
     id: string; // String!
     name: string; // String!
   }
-  DateEdges: { // root type
-    max?: string | null; // String
-    min?: string | null; // String
-  }
   Mutation: {};
   Query: {};
   Transaction: { // root type
@@ -363,6 +359,11 @@ export interface NexusGenObjects {
     isIncome: boolean; // Boolean!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  TransactionsExtended: { // root type
+    expendSum: number; // Float!
+    incomesSum: number; // Float!
+    nodes: Array<NexusGenRootTypes['Transaction'] | null>; // [Transaction]!
   }
 }
 
@@ -382,10 +383,6 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     name: string; // String!
   }
-  DateEdges: { // field return type
-    max: string | null; // String
-    min: string | null; // String
-  }
   Mutation: { // field return type
     createOneCategory: NexusGenRootTypes['Category']; // Category!
     createOneTransaction: NexusGenRootTypes['Transaction']; // Transaction!
@@ -394,11 +391,9 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
-    maxDate: NexusGenScalars['DateTime'] | null; // DateTime
     suggestTransactionTitle: Array<string | null> | null; // [String]
     transaction: NexusGenRootTypes['Transaction'] | null; // Transaction
-    transactions: NexusGenRootTypes['Transaction'][]; // [Transaction!]!
-    transactionsDateEdges: NexusGenRootTypes['DateEdges'] | null; // DateEdges
+    transactions: NexusGenRootTypes['TransactionsExtended'][]; // [TransactionsExtended!]!
   }
   Transaction: { // field return type
     amount: number; // Float!
@@ -411,6 +406,11 @@ export interface NexusGenFieldTypes {
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  TransactionsExtended: { // field return type
+    expendSum: number; // Float!
+    incomesSum: number; // Float!
+    nodes: Array<NexusGenRootTypes['Transaction'] | null>; // [Transaction]!
+  }
 }
 
 export interface NexusGenFieldTypeNames {
@@ -418,10 +418,6 @@ export interface NexusGenFieldTypeNames {
     icon: 'String'
     id: 'String'
     name: 'String'
-  }
-  DateEdges: { // field return type name
-    max: 'String'
-    min: 'String'
   }
   Mutation: { // field return type name
     createOneCategory: 'Category'
@@ -431,11 +427,9 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     categories: 'Category'
-    maxDate: 'DateTime'
     suggestTransactionTitle: 'String'
     transaction: 'Transaction'
-    transactions: 'Transaction'
-    transactionsDateEdges: 'DateEdges'
+    transactions: 'TransactionsExtended'
   }
   Transaction: { // field return type name
     amount: 'Float'
@@ -447,6 +441,11 @@ export interface NexusGenFieldTypeNames {
     isIncome: 'Boolean'
     title: 'String'
     updatedAt: 'DateTime'
+  }
+  TransactionsExtended: { // field return type name
+    expendSum: 'Float'
+    incomesSum: 'Float'
+    nodes: 'Transaction'
   }
 }
 

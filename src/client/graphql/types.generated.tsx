@@ -55,6 +55,13 @@ export type CategoryCreateWithoutTransactionInput = {
   icon?: Maybe<Scalars['String']>;
 };
 
+export type CategoryUpdateInput = {
+  id?: Maybe<StringFieldUpdateOperationsInput>;
+  name?: Maybe<StringFieldUpdateOperationsInput>;
+  icon?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  Transaction?: Maybe<TransactionUpdateManyWithoutCategoryInput>;
+};
+
 export type CategoryUpdateOneRequiredWithoutTransactionInput = {
   create?: Maybe<CategoryCreateWithoutTransactionInput>;
   connectOrCreate?: Maybe<CategoryCreateOrConnectWithoutTransactionInput>;
@@ -87,12 +94,6 @@ export type CategoryWhereInput = {
 export type CategoryWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-};
-
-export type DateEdges = {
-  __typename?: 'DateEdges';
-  min?: Maybe<Scalars['String']>;
-  max?: Maybe<Scalars['String']>;
 };
 
 
@@ -135,6 +136,7 @@ export type Mutation = {
   createOneTransaction: Transaction;
   updateOneTransaction?: Maybe<Transaction>;
   createOneCategory: Category;
+  updateOneCategory?: Maybe<Category>;
 };
 
 
@@ -151,6 +153,12 @@ export type MutationUpdateOneTransactionArgs = {
 
 export type MutationCreateOneCategoryArgs = {
   data: CategoryCreateInput;
+};
+
+
+export type MutationUpdateOneCategoryArgs = {
+  data: CategoryUpdateInput;
+  where: CategoryWhereUniqueInput;
 };
 
 export type NestedBoolFilter = {
@@ -215,10 +223,9 @@ export type NullableStringFieldUpdateOperationsInput = {
 export type Query = {
   __typename?: 'Query';
   transaction?: Maybe<Transaction>;
-  transactions: Array<Transaction>;
+  transactions: Array<TransactionsExtended>;
   categories: Array<Category>;
-  transactionsDateEdges?: Maybe<DateEdges>;
-  maxDate?: Maybe<Scalars['DateTime']>;
+  suggestTransactionTitle?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
@@ -243,6 +250,11 @@ export type QueryCategoriesArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<CategoryWhereUniqueInput>;
   after?: Maybe<CategoryWhereUniqueInput>;
+};
+
+
+export type QuerySuggestTransactionTitleArgs = {
+  query: Scalars['String'];
 };
 
 export enum SortOrder {
@@ -347,6 +359,21 @@ export type TransactionOrderByInput = {
   categoryId?: Maybe<SortOrder>;
 };
 
+export type TransactionScalarWhereInput = {
+  AND?: Maybe<Array<TransactionScalarWhereInput>>;
+  OR?: Maybe<Array<TransactionScalarWhereInput>>;
+  NOT?: Maybe<Array<TransactionScalarWhereInput>>;
+  id?: Maybe<StringFilter>;
+  title?: Maybe<StringFilter>;
+  amount?: Maybe<FloatFilter>;
+  isIncome?: Maybe<BoolFilter>;
+  date?: Maybe<DateTimeFilter>;
+  description?: Maybe<StringNullableFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
+  categoryId?: Maybe<StringFilter>;
+};
+
 export type TransactionUpdateInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
@@ -357,6 +384,57 @@ export type TransactionUpdateInput = {
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   category?: Maybe<CategoryUpdateOneRequiredWithoutTransactionInput>;
+};
+
+export type TransactionUpdateManyMutationInput = {
+  id?: Maybe<StringFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  amount?: Maybe<FloatFieldUpdateOperationsInput>;
+  isIncome?: Maybe<BoolFieldUpdateOperationsInput>;
+  date?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  description?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type TransactionUpdateManyWithWhereWithoutCategoryInput = {
+  where: TransactionScalarWhereInput;
+  data: TransactionUpdateManyMutationInput;
+};
+
+export type TransactionUpdateManyWithoutCategoryInput = {
+  create?: Maybe<Array<TransactionCreateWithoutCategoryInput>>;
+  connectOrCreate?: Maybe<Array<TransactionCreateOrConnectWithoutCategoryInput>>;
+  upsert?: Maybe<Array<TransactionUpsertWithWhereUniqueWithoutCategoryInput>>;
+  connect?: Maybe<Array<TransactionWhereUniqueInput>>;
+  set?: Maybe<Array<TransactionWhereUniqueInput>>;
+  disconnect?: Maybe<Array<TransactionWhereUniqueInput>>;
+  delete?: Maybe<Array<TransactionWhereUniqueInput>>;
+  update?: Maybe<Array<TransactionUpdateWithWhereUniqueWithoutCategoryInput>>;
+  updateMany?: Maybe<Array<TransactionUpdateManyWithWhereWithoutCategoryInput>>;
+  deleteMany?: Maybe<Array<TransactionScalarWhereInput>>;
+};
+
+export type TransactionUpdateWithWhereUniqueWithoutCategoryInput = {
+  where: TransactionWhereUniqueInput;
+  data: TransactionUpdateWithoutCategoryInput;
+};
+
+export type TransactionUpdateWithoutCategoryInput = {
+  id?: Maybe<StringFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  amount?: Maybe<FloatFieldUpdateOperationsInput>;
+  isIncome?: Maybe<BoolFieldUpdateOperationsInput>;
+  date?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  description?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type TransactionUpsertWithWhereUniqueWithoutCategoryInput = {
+  where: TransactionWhereUniqueInput;
+  update: TransactionUpdateWithoutCategoryInput;
+  create: TransactionCreateWithoutCategoryInput;
 };
 
 export type TransactionWhereInput = {
@@ -377,6 +455,13 @@ export type TransactionWhereInput = {
 
 export type TransactionWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
+};
+
+export type TransactionsExtended = {
+  __typename?: 'TransactionsExtended';
+  nodes: Array<Maybe<Transaction>>;
+  incomesSum: Scalars['Float'];
+  expendSum: Scalars['Float'];
 };
 
 export type CategorySnippetFragment = (
@@ -453,19 +538,12 @@ export type TransactionsQueryVariables = Exact<{
 export type TransactionsQuery = (
   { __typename?: 'Query' }
   & { transactions: Array<(
-    { __typename?: 'Transaction' }
-    & TransactionSnippetFragment
-  )> }
-);
-
-export type TransactionDateEdgesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type TransactionDateEdgesQuery = (
-  { __typename?: 'Query' }
-  & { transactionsDateEdges?: Maybe<(
-    { __typename?: 'DateEdges' }
-    & Pick<DateEdges, 'min' | 'max'>
+    { __typename?: 'TransactionsExtended' }
+    & Pick<TransactionsExtended, 'incomesSum' | 'expendSum'>
+    & { nodes: Array<Maybe<(
+      { __typename?: 'Transaction' }
+      & TransactionSnippetFragment
+    )>> }
   )> }
 );
 
@@ -537,23 +615,15 @@ export function useTransactionQuery(options: Omit<Urql.UseQueryArgs<TransactionQ
 export const TransactionsDocument = gql`
     query Transactions($where: TransactionWhereInput, $orderBy: [TransactionOrderByInput!]) {
   transactions(where: $where, orderBy: $orderBy) {
-    ...TransactionSnippet
+    nodes {
+      ...TransactionSnippet
+    }
+    incomesSum
+    expendSum
   }
 }
     ${TransactionSnippetFragmentDoc}`;
 
 export function useTransactionsQuery(options: Omit<Urql.UseQueryArgs<TransactionsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TransactionsQuery>({ query: TransactionsDocument, ...options });
-};
-export const TransactionDateEdgesDocument = gql`
-    query TransactionDateEdges {
-  transactionsDateEdges {
-    min
-    max
-  }
-}
-    `;
-
-export function useTransactionDateEdgesQuery(options: Omit<Urql.UseQueryArgs<TransactionDateEdgesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<TransactionDateEdgesQuery>({ query: TransactionDateEdgesDocument, ...options });
 };

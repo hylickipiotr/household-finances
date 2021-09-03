@@ -15,3 +15,14 @@ export const Transaction = objectType({
     t.model.updatedAt();
   },
 });
+
+export const TransactionsExtended = objectType({
+  name: "TransactionsExtended",
+  definition(t) {
+    t.nonNull.list.field("nodes", {
+      type: "Transaction",
+    });
+    t.nonNull.float("incomesSum");
+    t.nonNull.float("expendSum");
+  },
+});

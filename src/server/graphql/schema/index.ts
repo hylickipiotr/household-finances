@@ -1,5 +1,4 @@
 import { list, mutationType, nonNull, queryType, stringArg } from "nexus";
-import { DateEdges } from "./DateEdges/type";
 
 export * from "./Category";
 export * from "./Transaction";
@@ -7,46 +6,35 @@ export * from "./Transaction";
 export const Query = queryType({
   definition(t) {
     t.crud.transaction();
-    t.crud.transactions({ filtering: true, ordering: true });
+    t.crud.transactions({
+      type: "TransactionsExtended" as any,
+      filtering: true,
+      ordering: true,
+      resolve: async (root, args, ctx, info, originalResolve): Promise<any> => {
+        const res = await originalResolve(root, args, ctx, info);
+        console.log(res);
+        return [
+          {
+            nodes: res,
+            incomesSum:
+              Math.round(
+                res.reduce(
+                  (s, { isIncome, amount }) => (isIncome ? s + amount : s),
+                  0
+                ) * 100
+              ) / 100,
+            expendSum:
+              Math.round(
+                res.reduce(
+                  (s, { isIncome, amount }) => (!isIncome ? s + amount : s),
+                  0
+                ) * 100
+              ) / 100,
+          },
+        ];
+      },
+    });
     t.crud.categories({ filtering: true });
-
-    t.field("transactionsDateEdges", {
-      type: DateEdges,
-      resolve: async (_, __, { prisma }) => {
-        const transactions = await prisma.transaction.findMany({
-          orderBy: {
-            date: "asc",
-          },
-        });
-
-        if (!transactions.length) {
-          return {
-            min: null,
-            max: null,
-          };
-        }
-
-        return {
-          min: transactions[0].date.toISOString(),
-          max: transactions[transactions.length - 1].date.toISOString(),
-        };
-      },
-    });
-
-    t.field("maxDate", {
-      type: "DateTime",
-      resolve: async (_, __, { prisma }) => {
-        const result = await prisma.transaction.findFirst({
-          orderBy: {
-            date: "desc",
-          },
-        });
-
-        if (!result) return null;
-
-        return result.date;
-      },
-    });
 
     t.field("suggestTransactionTitle", {
       type: list("String"),

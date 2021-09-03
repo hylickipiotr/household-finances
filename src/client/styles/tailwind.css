@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-input,
+  .form-textarea,
+  .form-select,
+  .form-multiselect,
+  .form-checkbox,
+  .form-radio {
+    @apply text-sm leading-4 placeholder-gray-400 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50;
+  }
+}

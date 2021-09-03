@@ -44,5 +44,8 @@ module.exports = {
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "off",
     "jsx-a11y/anchor-is-valid": 0,
+    "react/require-default-props": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "arrow-body-style": 0,
   },
 };

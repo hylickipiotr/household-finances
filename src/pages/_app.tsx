@@ -1,3 +1,4 @@
+import { IdProvider } from "@radix-ui/react-id";
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import { NextPage } from "next";
@@ -13,9 +14,11 @@ numeral.locale("pl");
 dayjs.locale("pl");
 
 const App: NextPage<AppProps> = ({ Component, pageProps }) => (
-  <UrqlProvider value={client}>
-    <Component {...pageProps} />
-  </UrqlProvider>
+  <IdProvider>
+    <UrqlProvider value={client}>
+      <Component {...pageProps} />
+    </UrqlProvider>
+  </IdProvider>
 );
 
 export default App;
