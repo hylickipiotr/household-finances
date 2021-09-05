@@ -1,24 +1,13 @@
-import tw from "tailwind-styled-components";
+import React from "react";
+import { Navigation } from "../Navigation";
 
-const Layout = tw.div`
-  flex
-  flex-col
-  h-screen
-  overflow-hidden
-`;
+const Layout: React.FC = ({ children }) => (
+  <div className="min-h-screen h-screen w-full flex overflow-hidden">
+    <Navigation />
+    <div className="flex-1 min-h-screen overflow-y-auto px-10 py-14 bg-white max-w-screen-2xl mx-auto">
+      {children}
+    </div>
+  </div>
+);
 
-const LayoutMain = tw.main`
-  flex-1
-  h-full
-  px-6
-  py-8
-  overflow-y-auto
-`;
-
-const LayoutWrapper = tw.div`
-  flex-1
-  flex
-  overflow-hidden
-`;
-
-export { Layout, LayoutMain, LayoutWrapper };
+export { Layout };
