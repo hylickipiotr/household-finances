@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import React from "react";
-import { Aside } from "src/client/components/Aside";
 import {
   Layout,
   LayoutHeader,
@@ -12,7 +11,6 @@ import { TransactionsHeader } from "src/client/components/TransactionsHeader";
 import TransactionList from "src/client/components/TransactionsList/TransactionList";
 import {
   SortOrder,
-  TransactionSnippetFragment,
   useTransactionsQuery,
 } from "src/client/graphql/types.generated";
 import { DateProvider, useDate } from "src/contexts/date";
@@ -60,17 +58,13 @@ const HomePage: NextPage = () => {
           <LayoutMain className="flex flex-col items-center">
             <StyledWrapper>
               <TransactionsHeader />
-              <TransactionList
-                data={
-                  data.transactions[0].nodes as TransactionSnippetFragment[]
-                }
-              />
+              <TransactionList data={data.transactions} />
             </StyledWrapper>
           </LayoutMain>
-          <Aside
+          {/* <Aside
             incomesSum={data.transactions[0].incomesSum}
             expendsSum={data.transactions[0].expendSum}
-          />
+          /> */}
         </LayoutWrapper>
       </Layout>
     </DateProvider>

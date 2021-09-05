@@ -39,8 +39,9 @@ const StyledTransactionTitle = tw.p`
 `;
 
 const StyledTransactionAmount = tw.p<{ isIncome: boolean }>`
+  font-mono
   w-24
-  text-base
+  text-sm
   leading-6
   font-normal
   text-right

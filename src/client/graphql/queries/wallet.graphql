@@ -1,0 +1,5 @@
+query Wallets {
+  wallets {
+    ...WalletSnippet
+  }
+}

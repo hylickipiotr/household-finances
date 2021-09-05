@@ -10,34 +10,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id          String @id @default(cuid())
-  username    String @unique
-  displayName String
-  password    String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Transaction {
-  id          String   @id @default(cuid())
-  title       String
-  amount      Float
-  isIncome    Boolean
-  date        DateTime
-  description String?
-  category    Category @relation(fields: [categoryId], references: [id])
-
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  categoryId String
-}
-
-model Category {
-  id   String  @id @default(cuid())
-  name String  @unique
-  icon String?
-
-  Transaction Transaction[]
+model Wallet {
+  id             String @id @default(cuid())
+  name           String
+  icon           String
+  color          String
+  initialBalance Float
 }
