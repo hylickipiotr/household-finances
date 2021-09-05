@@ -1,12 +1,12 @@
 import { RadioGroup } from "@headlessui/react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogOverlay,
   DialogTrigger,
 } from "@radix-ui/react-dialog";
 import clsx from "clsx";
+import { isEqual } from "lodash";
 import React from "react";
 import CurrencyInput from "react-currency-input-field";
 import {
@@ -22,6 +22,12 @@ import {
   RiCheckboxCircleFill,
 } from "react-icons/ri";
 import { Wallet, WalletColor } from "src/@types/Wallet";
+import {
+  DialogProvider,
+  useDialog,
+  useDialogContext,
+} from "src/client/contexts/Dialog";
+import { useCreateWalletMutation } from "src/client/graphql/types.generated";
 
 type WalletFormValues = Pick<Wallet, "name" | "icon" | "color"> & {
   initialBalance: string;
@@ -167,21 +173,96 @@ const InitialBalanceField: React.FC = () => {
 };
 
 /* -------------------------------------------------------------------------- */
+/*                                SubmitButton                                */
+/* -------------------------------------------------------------------------- */
+
+type SubmitButtonProps = {
+  fetching: boolean;
+};
+
+const SubmitButton: React.VFC<SubmitButtonProps> = ({ fetching }) => {
+  const { watch } = useFormContext<WalletFormValues>();
+  const values = watch();
+
+  const disabled = fetching || isEqual(values, defaultFromValues);
+
+  return (
+    <button
+      type="submit"
+      className={clsx(
+        "flex items-center px-6 py-3 bg-blue-600 font-semibold text-white rounded-lg shadow-md focus:outline-none focus:ring disabled:bg-gray-300",
+        disabled && "cursor-default"
+      )}
+      disabled={disabled}
+    >
+      Create
+    </button>
+  );
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                 CloseButton                                */
+/* -------------------------------------------------------------------------- */
+
+type CloseButtonProps = React.HTMLAttributes<HTMLButtonElement>;
+
+const CloseButton: React.FC<CloseButtonProps> = ({ children, ...props }) => {
+  const { onOpenChange } = useDialogContext();
+  const { watch, reset } = useFormContext<WalletFormValues>();
+  const values = watch();
+
+  const handleClose = () => {
+    if (!isEqual(values, defaultFromValues)) {
+      const answer = window.confirm(
+        "Do you want to close? Changes you made may not be save."
+      );
+      if (!answer) return;
+    }
+    onOpenChange(false);
+    reset();
+  };
+
+  return (
+    <button {...props} type="button" onClick={handleClose}>
+      {children}
+    </button>
+  );
+};
+
+/* -------------------------------------------------------------------------- */
 /*                                NewWalletForm                               */
 /* -------------------------------------------------------------------------- */
 
 const NewWalletForm = () => {
-  const { handleSubmit } = useFormContext<WalletFormValues>();
+  const { handleSubmit, reset } = useFormContext<WalletFormValues>();
+  const [{ fetching }, createWallet] = useCreateWalletMutation();
+  const { onOpenChange } = useDialogContext();
 
-  const onSubmit: SubmitHandler<WalletFormValues> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<WalletFormValues> = async (data) => {
+    const initialBalance = Number(
+      data.initialBalance.replace(",", ".").replace(" ", "")
+    );
+    try {
+      await createWallet({
+        data: {
+          ...data,
+          initialBalance,
+        },
+      });
+      onOpenChange(false);
+      reset();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <div className="flex items-end justify-between px-6 pt-8">
         <h1 className="text-2xl font-semibold">Create new wallet</h1>
-        <DialogClose className="flex items-center justify-center w-10 h-10 text-gray-700 hover:text-gray-900">
+        <CloseButton className="flex items-center justify-center w-10 h-10 text-gray-700 hover:text-gray-900">
           <IoCloseOutline className="w-8 h-8" />
-        </DialogClose>
+        </CloseButton>
       </div>
       <div className="px-6 space-y-6">
         <NameField />
@@ -190,18 +271,10 @@ const NewWalletForm = () => {
         <InitialBalanceField />
       </div>
       <div className="flex items-center px-6 py-4 justify-end space-x-3 border-t border-gray-300">
-        <button
-          type="button"
-          className="flex items-center space-x-3 px-6 py-3 bg-gray-200 font-semibold text-gray-900 rounded-lg focus:outline-none focus:ring focus:ring-black"
-        >
+        <CloseButton className="flex items-center space-x-3 px-6 py-3 bg-gray-200 font-semibold text-gray-900 rounded-lg focus:outline-none focus:ring focus:ring-black">
           Cancel
-        </button>
-        <button
-          type="submit"
-          className="flex items-center px-6 py-3 bg-blue-600 font-semibold text-white rounded-lg shadow-md focus:outline-none focus:ring"
-        >
-          Create
-        </button>
+        </CloseButton>
+        <SubmitButton fetching={fetching} />
       </div>
     </form>
   );
@@ -217,35 +290,38 @@ type CreateNewWalletProps = {
 };
 
 const defaultFromValues: WalletFormValues = {
+  name: "",
   color: "gray",
   icon: "💰",
-  name: "",
   initialBalance: "0",
 };
 
 const CreateNewWallet: React.VFC<CreateNewWalletProps> = ({
   defaultValues = defaultFromValues,
 }) => {
+  const dialogContext = useDialog();
   const methods = useForm<WalletFormValues>({
     defaultValues,
   });
 
   return (
-    <Dialog open>
-      <DialogTrigger
-        type="button"
-        className="flex items-center space-x-3 px-6 py-3 bg-blue-600 font-semibold text-white rounded-lg shadow-md focus:outline-none focus:ring"
-      >
-        <BiPlus className="w-5 h-5" />
-        <p className="text-base">Create new wallet</p>
-      </DialogTrigger>
-      <DialogOverlay className="dialog-overlay" />
-      <DialogContent className="dialog-content w-full">
-        <FormProvider {...methods}>
-          <NewWalletForm />
-        </FormProvider>
-      </DialogContent>
-    </Dialog>
+    <DialogProvider value={dialogContext}>
+      <Dialog {...dialogContext}>
+        <DialogTrigger
+          type="button"
+          className="flex items-center space-x-3 px-6 py-3 bg-blue-600 font-semibold text-white rounded-lg shadow-md focus:outline-none focus:ring"
+        >
+          <BiPlus className="w-5 h-5" />
+          <p className="text-base">Create new wallet</p>
+        </DialogTrigger>
+        <DialogOverlay className="dialog-overlay" />
+        <DialogContent className="dialog-content w-full">
+          <FormProvider {...methods}>
+            <NewWalletForm />
+          </FormProvider>
+        </DialogContent>
+      </Dialog>
+    </DialogProvider>
   );
 };
 

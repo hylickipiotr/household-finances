@@ -10,6 +10,7 @@ module.exports = {
         scalars: {
           DateTime: "string",
         },
+        skipTypename: true,
       },
       plugins: ["typescript", "typescript-operations", "typescript-urql"],
       hooks: {

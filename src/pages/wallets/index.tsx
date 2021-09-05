@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/tabindex-no-positive */
 import clsx from "clsx";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import {
   IoLayersOutline,
@@ -8,34 +8,14 @@ import {
   IoPersonOutline,
   IoWallet,
 } from "react-icons/io5";
-import { Wallet } from "src/@types/Wallet";
 import { CreateNewWallet } from "src/client/components/CreateNewWallet";
 import { WalletCardList } from "src/client/components/WalletCardList";
-
-const loggedUser = {
-  name: "Piotr Hylicki",
-  email: "hylickipiotr@gmail.com",
-  avatarUrl: "https://uifaces.co/our-content/donated/xZ4wg2Xj.jpg",
-};
-
-const wallets: Wallet[] = [
-  {
-    id: "de4d91f7-58aa-412f-a98f-aed15a4ff546",
-    name: "Master",
-    color: "gray",
-    icon: "🐨",
-    totalAmount: 12252.0,
-    initialBalance: 0,
-  },
-  {
-    id: "a144d1f0-3583-456f-bdc7-164bfc45642a",
-    name: "Savings",
-    color: "blue",
-    icon: "☔️",
-    totalAmount: 167.0,
-    initialBalance: 0,
-  },
-];
+import { getNextUrqlClient } from "src/client/graphql/client";
+import {
+  useWalletsQuery,
+  WalletsDocument,
+} from "src/client/graphql/types.generated";
+import { withUrqlClient } from "src/client/helpers/withUrqlClient";
 
 /* -------------------------------------------------------------------------- */
 /*                                    Logo                                    */
@@ -122,7 +102,11 @@ const Layout: React.FC = ({ children }) => (
 /*                                    Page                                    */
 /* -------------------------------------------------------------------------- */
 
-const Page: NextPage = () => {
+const Wallets: NextPage = () => {
+  const [{ data }] = useWalletsQuery();
+
+  if (!data) return null;
+
   return (
     <Layout>
       <div className="space-y-8">
@@ -133,10 +117,21 @@ const Page: NextPage = () => {
           </div>
           <CreateNewWallet />
         </div>
-        <WalletCardList wallets={wallets} />
+        <WalletCardList wallets={data?.wallets} />
       </div>
     </Layout>
   );
 };
 
-export default Page;
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { client, ssrCache } = getNextUrqlClient();
+  await client.query(WalletsDocument).toPromise();
+
+  return {
+    props: {
+      urqlState: ssrCache.extractData(),
+    },
+  };
+};
+
+export default withUrqlClient(Wallets);

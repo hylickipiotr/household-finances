@@ -1,0 +1,5 @@
+mutation CreateWallet($data: WalletCreateInput!) {
+  createOneWallet(data: $data) {
+    ...WalletSnippet
+  }
+}

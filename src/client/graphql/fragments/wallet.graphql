@@ -1,0 +1,7 @@
+fragment WalletSnippet on Wallet {
+  id
+  name
+  icon
+  color
+  initialBalance
+}

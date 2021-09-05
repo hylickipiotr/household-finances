@@ -1,11 +1,6 @@
+import { WalletSnippetFragment } from "src/client/graphql/types.generated";
+
 type WalletColor = "gray" | "blue";
-type Wallet = {
-  id: string;
-  name: string;
-  icon: string;
-  color: WalletColor;
-  totalAmount: number;
-  initialBalance: number;
-};
+type Wallet = WalletSnippetFragment;
 
 export type { Wallet, WalletColor };
