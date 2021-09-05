@@ -360,11 +360,6 @@ export interface NexusGenObjects {
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
-  TransactionsExtended: { // root type
-    expendSum: number; // Float!
-    incomesSum: number; // Float!
-    nodes: Array<NexusGenRootTypes['Transaction'] | null>; // [Transaction]!
-  }
 }
 
 export interface NexusGenInterfaces {
@@ -391,9 +386,8 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
-    suggestTransactionTitle: Array<string | null> | null; // [String]
     transaction: NexusGenRootTypes['Transaction'] | null; // Transaction
-    transactions: NexusGenRootTypes['TransactionsExtended'][]; // [TransactionsExtended!]!
+    transactions: NexusGenRootTypes['Transaction'][]; // [Transaction!]!
   }
   Transaction: { // field return type
     amount: number; // Float!
@@ -405,11 +399,6 @@ export interface NexusGenFieldTypes {
     isIncome: boolean; // Boolean!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-  }
-  TransactionsExtended: { // field return type
-    expendSum: number; // Float!
-    incomesSum: number; // Float!
-    nodes: Array<NexusGenRootTypes['Transaction'] | null>; // [Transaction]!
   }
 }
 
@@ -427,9 +416,8 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     categories: 'Category'
-    suggestTransactionTitle: 'String'
     transaction: 'Transaction'
-    transactions: 'TransactionsExtended'
+    transactions: 'Transaction'
   }
   Transaction: { // field return type name
     amount: 'Float'
@@ -441,11 +429,6 @@ export interface NexusGenFieldTypeNames {
     isIncome: 'Boolean'
     title: 'String'
     updatedAt: 'DateTime'
-  }
-  TransactionsExtended: { // field return type name
-    expendSum: 'Float'
-    incomesSum: 'Float'
-    nodes: 'Transaction'
   }
 }
 
@@ -473,9 +456,6 @@ export interface NexusGenArgTypes {
       first?: number | null; // Int
       last?: number | null; // Int
       where?: NexusGenInputs['CategoryWhereInput'] | null; // CategoryWhereInput
-    }
-    suggestTransactionTitle: { // args
-      query: string; // String!
     }
     transaction: { // args
       where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!

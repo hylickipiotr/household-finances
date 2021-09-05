@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Unica+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,5 +24,15 @@
   .form-checkbox,
   .form-radio {
     @apply text-sm leading-4 placeholder-gray-400 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50;
+  }
+}
+
+@layer components {
+  .dialog-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-70;
+  }
+
+  .dialog-content {
+    @apply fixed align-middle top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg max-h-[80vh] rounded-2xl bg-white shadow-xl focus:outline-none;
   }
 }

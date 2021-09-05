@@ -223,9 +223,8 @@ export type NullableStringFieldUpdateOperationsInput = {
 export type Query = {
   __typename?: 'Query';
   transaction?: Maybe<Transaction>;
-  transactions: Array<TransactionsExtended>;
+  transactions: Array<Transaction>;
   categories: Array<Category>;
-  suggestTransactionTitle?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
@@ -250,11 +249,6 @@ export type QueryCategoriesArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<CategoryWhereUniqueInput>;
   after?: Maybe<CategoryWhereUniqueInput>;
-};
-
-
-export type QuerySuggestTransactionTitleArgs = {
-  query: Scalars['String'];
 };
 
 export enum SortOrder {
@@ -457,13 +451,6 @@ export type TransactionWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
 };
 
-export type TransactionsExtended = {
-  __typename?: 'TransactionsExtended';
-  nodes: Array<Maybe<Transaction>>;
-  incomesSum: Scalars['Float'];
-  expendSum: Scalars['Float'];
-};
-
 export type CategorySnippetFragment = (
   { __typename?: 'Category' }
   & Pick<Category, 'id' | 'name' | 'icon'>
@@ -538,12 +525,8 @@ export type TransactionsQueryVariables = Exact<{
 export type TransactionsQuery = (
   { __typename?: 'Query' }
   & { transactions: Array<(
-    { __typename?: 'TransactionsExtended' }
-    & Pick<TransactionsExtended, 'incomesSum' | 'expendSum'>
-    & { nodes: Array<Maybe<(
-      { __typename?: 'Transaction' }
-      & TransactionSnippetFragment
-    )>> }
+    { __typename?: 'Transaction' }
+    & TransactionSnippetFragment
   )> }
 );
 
@@ -615,11 +598,7 @@ export function useTransactionQuery(options: Omit<Urql.UseQueryArgs<TransactionQ
 export const TransactionsDocument = gql`
     query Transactions($where: TransactionWhereInput, $orderBy: [TransactionOrderByInput!]) {
   transactions(where: $where, orderBy: $orderBy) {
-    nodes {
-      ...TransactionSnippet
-    }
-    incomesSum
-    expendSum
+    ...TransactionSnippet
   }
 }
     ${TransactionSnippetFragmentDoc}`;

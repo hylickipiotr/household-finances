@@ -19,7 +19,7 @@
     "watch:graphql-codegen": "yarn wait-on http://localhost:3000 && graphql-codegen --watch"
   },
   "dependencies": {
-    "@headlessui/react": "^1.1.0",
+    "@headlessui/react": "^1.4.1",
     "@nexus/schema": "^0.20.1",
     "@prisma/client": "^2.22.1",
     "@radix-ui/react-collapsible": "^0.0.16",

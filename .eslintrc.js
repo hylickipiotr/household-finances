@@ -47,5 +47,7 @@ module.exports = {
     "react/require-default-props": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "arrow-body-style": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
   },
 };

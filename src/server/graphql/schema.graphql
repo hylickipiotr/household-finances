@@ -186,9 +186,8 @@ input NullableStringFieldUpdateOperationsInput {
 
 type Query {
   categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, where: CategoryWhereInput): [Category!]!
-  suggestTransactionTitle(query: String!): [String]
   transaction(where: TransactionWhereUniqueInput!): Transaction
-  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int, orderBy: [TransactionOrderByInput!], where: TransactionWhereInput): [TransactionsExtended!]!
+  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int, orderBy: [TransactionOrderByInput!], where: TransactionWhereInput): [Transaction!]!
 }
 
 enum SortOrder {
@@ -388,10 +387,4 @@ input TransactionWhereInput {
 
 input TransactionWhereUniqueInput {
   id: String
-}
-
-type TransactionsExtended {
-  expendSum: Float!
-  incomesSum: Float!
-  nodes: [Transaction]!
 }

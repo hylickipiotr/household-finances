@@ -3,10 +3,6 @@ query Transactions(
   $orderBy: [TransactionOrderByInput!]
 ) {
   transactions(where: $where, orderBy: $orderBy) {
-    nodes {
-      ...TransactionSnippet
-    }
-    incomesSum
-    expendSum
+    ...TransactionSnippet
   }
 }
