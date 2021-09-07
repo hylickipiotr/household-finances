@@ -1,5 +1,5 @@
-query Wallets {
-  wallets {
+query Wallet($id: String!) {
+  wallet(where: { id: $id }) {
     ...WalletSnippet
   }
 }

@@ -25,6 +25,7 @@ export type FloatFieldUpdateOperationsInput = {
 export type Mutation = {
   createOneWallet: Wallet;
   updateOneWallet?: Maybe<Wallet>;
+  deleteOneWallet?: Maybe<Wallet>;
 };
 
 
@@ -38,8 +39,14 @@ export type MutationUpdateOneWalletArgs = {
   where: WalletWhereUniqueInput;
 };
 
+
+export type MutationDeleteOneWalletArgs = {
+  where: WalletWhereUniqueInput;
+};
+
 export type Query = {
   wallets: Array<Wallet>;
+  wallet?: Maybe<Wallet>;
 };
 
 
@@ -48,6 +55,11 @@ export type QueryWalletsArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<WalletWhereUniqueInput>;
   after?: Maybe<WalletWhereUniqueInput>;
+};
+
+
+export type QueryWalletArgs = {
+  where: WalletWhereUniqueInput;
 };
 
 export type StringFieldUpdateOperationsInput = {
@@ -91,6 +103,20 @@ export type CreateWalletMutationVariables = Exact<{
 
 export type CreateWalletMutation = { createOneWallet: WalletSnippetFragment };
 
+export type DeleteWalletMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteWalletMutation = { deleteOneWallet?: Maybe<Pick<Wallet, 'id'>> };
+
+export type WalletQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type WalletQuery = { wallet?: Maybe<WalletSnippetFragment> };
+
 export type WalletsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -115,6 +141,28 @@ export const CreateWalletDocument = gql`
 
 export function useCreateWalletMutation() {
   return Urql.useMutation<CreateWalletMutation, CreateWalletMutationVariables>(CreateWalletDocument);
+};
+export const DeleteWalletDocument = gql`
+    mutation DeleteWallet($id: String!) {
+  deleteOneWallet(where: {id: $id}) {
+    id
+  }
+}
+    `;
+
+export function useDeleteWalletMutation() {
+  return Urql.useMutation<DeleteWalletMutation, DeleteWalletMutationVariables>(DeleteWalletDocument);
+};
+export const WalletDocument = gql`
+    query Wallet($id: String!) {
+  wallet(where: {id: $id}) {
+    ...WalletSnippet
+  }
+}
+    ${WalletSnippetFragmentDoc}`;
+
+export function useWalletQuery(options: Omit<Urql.UseQueryArgs<WalletQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<WalletQuery>({ query: WalletDocument, ...options });
 };
 export const WalletsDocument = gql`
     query Wallets {

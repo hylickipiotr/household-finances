@@ -1,0 +1,5 @@
+mutation DeleteWallet($id: String!) {
+  deleteOneWallet(where: { id: $id }) {
+    id
+  }
+}

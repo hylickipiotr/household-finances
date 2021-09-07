@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import numeral from "numeral";
 import React from "react";
 import { Wallet, WalletColor } from "src/@types/Wallet";
+import { formatCurrency } from "src/client/helpers/formatCurrency";
 
 type WalletCardProps = Wallet & {
   onClick?: (id: string, event: React.MouseEvent<HTMLLIElement>) => void;
@@ -21,10 +21,10 @@ const WalletCard: React.VFC<WalletCardProps> = ({
   name,
   icon,
   color,
-  totalAmount,
+  initialBalance,
   onClick,
 }) => {
-  const colorCls = getColorCls(color);
+  const colorCls = getColorCls(color as WalletColor);
 
   const handleClick: React.MouseEventHandler<HTMLLIElement> = (e) => {
     onClick?.(id, e);
@@ -33,7 +33,7 @@ const WalletCard: React.VFC<WalletCardProps> = ({
   return (
     <li
       className={clsx(
-        "relative flex flex-col justify-between w-full h-48 p-8 bg-gray-100 shadow-md border border-gray-200 rounded-xl overflow-hidden before:absolute before:left-0 before:bottom-0 before:w-full before:h-2.5 before:transform before:translate-y-1 before:transition-transform before:ease-in-out before:duration-150 hover:before:translate-y-0 focus:outline-none focus:before:translate-y-0",
+        "relative flex flex-col justify-between w-full h-48 p-8 bg-gray-100 border border-gray-200 rounded-xl overflow-hidden before:absolute before:left-0 before:bottom-0 before:w-full before:h-2.5 before:transform before:translate-y-1 before:transition-transform before:ease-in-out before:duration-150 hover:before:translate-y-0 focus:outline-none focus:before:translate-y-0",
         onClick && "cursor-pointer",
         colorCls
       )}
@@ -45,7 +45,7 @@ const WalletCard: React.VFC<WalletCardProps> = ({
           {icon}
         </span>
         <div className="text-lg text-gray-500 font-finance">
-          {numeral(totalAmount).format("0,00.00")} zł
+          {formatCurrency(initialBalance)}
         </div>
       </div>
       <p className="text-3xl text-gray-900 font-semibold truncate">{name}</p>

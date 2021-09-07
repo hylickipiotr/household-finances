@@ -12,10 +12,12 @@ input FloatFieldUpdateOperationsInput {
 
 type Mutation {
   createOneWallet(data: WalletCreateInput!): Wallet!
+  deleteOneWallet(where: WalletWhereUniqueInput!): Wallet
   updateOneWallet(data: WalletUpdateInput!, where: WalletWhereUniqueInput!): Wallet
 }
 
 type Query {
+  wallet(where: WalletWhereUniqueInput!): Wallet
   wallets(after: WalletWhereUniqueInput, before: WalletWhereUniqueInput, first: Int, last: Int): [Wallet!]!
 }
 

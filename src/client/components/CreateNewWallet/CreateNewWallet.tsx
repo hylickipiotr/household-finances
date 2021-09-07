@@ -16,7 +16,6 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { BiPlus } from "react-icons/bi";
-import { IoCloseOutline } from "react-icons/io5";
 import {
   RiCheckboxBlankCircleFill,
   RiCheckboxCircleFill,
@@ -41,7 +40,7 @@ const NameField: React.VFC = () => {
   const fieldName = "name";
   const fieldConfig = {
     minLength: 1,
-    maxLength: 100,
+    maxLength: 60,
     required: true,
   };
 
@@ -54,11 +53,11 @@ const NameField: React.VFC = () => {
         {...fieldConfig}
         autoComplete="off"
         placeholder="Name"
-        className="w-full border-l-0 border-t-0 pr-16 py-2 border-r-0 border-b-2 border-gray-300 transition-colors ease-out duration-75 focus:outline-none focus:border-blue-600"
+        className="w-full border-l-0 border-t-0 pr-12 py-2 font-medium text-xl border-r-0 border-b-2 border-gray-300 transition-colors ease-out duration-75 focus:outline-none focus:border-blue-600"
       />
-      <p className="absolute top-2 right-0 text-gray-400">
-        {value.length}/{fieldConfig.maxLength}
-      </p>
+      <div className="absolute top-2 right-0 px-2 h-6 flex items-center text-sm bg-gray-200 text-gray-500 rounded">
+        {fieldConfig.maxLength - value.length}
+      </div>
     </div>
   );
 };
@@ -81,7 +80,7 @@ const IconPicker: React.VFC = () => {
       {...fieldConfig}
       autoComplete="off"
       placeholder="Icon"
-      className="w-full border-l-0 border-t-0 py-2 border-r-0 border-b-2 border-gray-300 transition-colors ease-out duration-75 focus:outline-none focus:border-blue-600"
+      className="w-full py-2 text-xl border-l-0 border-t-0 border-r-0 border-b-2 border-gray-300 transition-colors ease-out duration-75 focus:outline-none focus:border-blue-600"
     />
   );
 };
@@ -259,10 +258,7 @@ const NewWalletForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <div className="flex items-end justify-between px-6 pt-8">
-        <h1 className="text-2xl font-semibold">Create new wallet</h1>
-        <CloseButton className="flex items-center justify-center w-10 h-10 text-gray-700 hover:text-gray-900">
-          <IoCloseOutline className="w-8 h-8" />
-        </CloseButton>
+        <h1 className="text-2xl font-semibold">Create wallet</h1>
       </div>
       <div className="px-6 space-y-6">
         <NameField />
@@ -315,7 +311,7 @@ const CreateNewWallet: React.VFC<CreateNewWalletProps> = ({
           <p className="text-base">Create new wallet</p>
         </DialogTrigger>
         <DialogOverlay className="dialog-overlay" />
-        <DialogContent className="dialog-content w-full">
+        <DialogContent className="dialog-content w-full overflow-hidden">
           <FormProvider {...methods}>
             <NewWalletForm />
           </FormProvider>
