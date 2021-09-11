@@ -1,0 +1,5 @@
+mutation UpdateWallet($id: String!, $data: WalletUpdateInput!) {
+  updateOneWallet(data: $data, where: { id: $id }) {
+    ...WalletSnippet
+  }
+}

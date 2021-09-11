@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { createContext } from "src/client/helpers/createContext";
 
 type DialogContextValue = {
@@ -9,7 +9,7 @@ type DialogContextValue = {
 const [DialogContext, useDialogContext] = createContext<DialogContextValue>();
 
 const useDialog = (defaultOpen = false) => {
-  const [open, onOpenChange] = useState(defaultOpen);
+  const [open, onOpenChange] = React.useState(defaultOpen);
 
   return {
     open,

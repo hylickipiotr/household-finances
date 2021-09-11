@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import React from "react";
+import { useRouter } from "next/router";
+import * as React from "react";
 import {
   IoLayersOutline,
   IoLogOutOutline,
@@ -35,21 +36,46 @@ const Logo = () => (
 type NavigationItemProps = {
   icon: React.ReactNode;
   active?: boolean;
+  onClick?: () => void;
+  path?: string;
 };
 
-const NavigationItem: React.FC<NavigationItemProps> = ({ icon, active }) => (
-  <li
-    tabIndex={0}
-    className={clsx(
-      "relative flex justify-center items-center space-x-4 h-10 rounded-md hover:text-gray-700 focus:outline-none focus:text-gray-700 cursor-pointer",
-      active
-        ? "text-gray-700 before:absolute before:top-0 before:bottom-0 before:right-0 before:w-1 before:bg-blue-500 before:rounded-l-lg"
-        : "text-gray-400"
-    )}
-  >
-    {icon}
-  </li>
-);
+const NavigationItem: React.FC<NavigationItemProps> = ({
+  icon,
+  active,
+  path,
+  onClick,
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (path) {
+      router.push(path);
+    }
+    onClick?.();
+  };
+
+  const isActive = React.useMemo(() => {
+    if (active !== undefined) return active;
+    if (path && router.pathname.startsWith(path)) return true;
+    return false;
+  }, [active, router.pathname]);
+
+  return (
+    <li
+      tabIndex={0}
+      className={clsx(
+        "relative flex justify-center items-center space-x-4 h-10 rounded-md hover:text-gray-700 focus:outline-none focus:text-gray-700 cursor-pointer",
+        isActive
+          ? "text-gray-700 before:absolute before:top-0 before:bottom-0 before:right-0 before:w-1 before:bg-blue-500 before:rounded-l-lg"
+          : "text-gray-400"
+      )}
+      onClick={handleClick}
+    >
+      {icon}
+    </li>
+  );
+};
 
 /* -------------------------------------------------------------------------- */
 /*                               NavigationList                               */
@@ -63,23 +89,31 @@ const NavigationList: React.FC = ({ children }) => (
 /*                                 Navigation                                 */
 /* -------------------------------------------------------------------------- */
 
-const Navigation: React.VFC = () => (
-  <div className="flex-shrink-0 flex flex-col justify-between pt-14 py-8 bg-white border-r border-gray-200 w-24">
-    <div className="space-y-14">
-      <div className="flex justify-center">
-        <Logo />
+const items = [
+  { icon: <IoWallet className="w-5 h-5" />, path: "/wallets" },
+  { icon: <IoLayersOutline className="w-5 h-5" />, path: "/categories" },
+];
+
+const Navigation: React.VFC = () => {
+  return (
+    <div className="flex-shrink-0 flex flex-col justify-between pt-14 py-8 bg-white border-r border-gray-200 w-24">
+      <div className="space-y-14">
+        <div className="flex justify-center">
+          <Logo />
+        </div>
+        <NavigationList>
+          {items.map(({ icon, path }) => (
+            <NavigationItem key={path} icon={icon} path={path} />
+          ))}
+        </NavigationList>
       </div>
       <NavigationList>
-        <NavigationItem active icon={<IoWallet className="w-5 h-5" />} />
-        <NavigationItem icon={<IoLayersOutline className="w-5 h-5" />} />
+        <NavigationItem icon={<IoPersonOutline className="w-5 h-5" />} />
+        <NavigationItem icon={<IoLogOutOutline className="w-5 h-5" />} />
       </NavigationList>
     </div>
-    <NavigationList>
-      <NavigationItem icon={<IoPersonOutline className="w-5 h-5" />} />
-      <NavigationItem icon={<IoLogOutOutline className="w-5 h-5" />} />
-    </NavigationList>
-  </div>
-);
+  );
+};
 
 /* -------------------------------------------------------------------------- */
 

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 function createContext<T>(): [React.Context<T>, () => T] {
   const Context = React.createContext(null as any);

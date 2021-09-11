@@ -84,9 +84,11 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createOneWallet: NexusGenRootTypes['Wallet']; // Wallet!
+    deleteOneWallet: NexusGenRootTypes['Wallet'] | null; // Wallet
     updateOneWallet: NexusGenRootTypes['Wallet'] | null; // Wallet
   }
   Query: { // field return type
+    wallet: NexusGenRootTypes['Wallet'] | null; // Wallet
     wallets: NexusGenRootTypes['Wallet'][]; // [Wallet!]!
   }
   Wallet: { // field return type
@@ -101,9 +103,11 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createOneWallet: 'Wallet'
+    deleteOneWallet: 'Wallet'
     updateOneWallet: 'Wallet'
   }
   Query: { // field return type name
+    wallet: 'Wallet'
     wallets: 'Wallet'
   }
   Wallet: { // field return type name
@@ -120,12 +124,18 @@ export interface NexusGenArgTypes {
     createOneWallet: { // args
       data: NexusGenInputs['WalletCreateInput']; // WalletCreateInput!
     }
+    deleteOneWallet: { // args
+      where: NexusGenInputs['WalletWhereUniqueInput']; // WalletWhereUniqueInput!
+    }
     updateOneWallet: { // args
       data: NexusGenInputs['WalletUpdateInput']; // WalletUpdateInput!
       where: NexusGenInputs['WalletWhereUniqueInput']; // WalletWhereUniqueInput!
     }
   }
   Query: {
+    wallet: { // args
+      where: NexusGenInputs['WalletWhereUniqueInput']; // WalletWhereUniqueInput!
+    }
     wallets: { // args
       after?: NexusGenInputs['WalletWhereUniqueInput'] | null; // WalletWhereUniqueInput
       before?: NexusGenInputs['WalletWhereUniqueInput'] | null; // WalletWhereUniqueInput
