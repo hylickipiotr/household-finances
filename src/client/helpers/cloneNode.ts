@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import * as React from "react";
 
 type CloneNode = <P extends { [k: string]: unknown } = any>(
   children: React.ReactNode,
@@ -10,7 +10,7 @@ const cloneNode: CloneNode = (children, extraProps) =>
     children,
     (child) =>
       React.isValidElement(child) &&
-      cloneElement(
+      React.cloneElement(
         child,
         extraProps instanceof Function ? extraProps(child.props) : extraProps
       )

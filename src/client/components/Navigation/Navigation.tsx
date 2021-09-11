@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import React, { useMemo } from "react";
+import * as React from "react";
 import {
   IoLayersOutline,
   IoLogOutOutline,
@@ -55,7 +55,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
     onClick?.();
   };
 
-  const isActive = useMemo(() => {
+  const isActive = React.useMemo(() => {
     if (active !== undefined) return active;
     if (path && router.pathname.startsWith(path)) return true;
     return false;

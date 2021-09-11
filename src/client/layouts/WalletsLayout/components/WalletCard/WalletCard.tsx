@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import React from "react";
+import * as React from "react";
 import { Wallet, WalletColor } from "src/@types/Wallet";
 import { formatCurrency } from "src/client/helpers/formatCurrency";
 

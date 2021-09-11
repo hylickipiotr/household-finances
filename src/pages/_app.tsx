@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import { AppProps } from "next/app";
 import numeral from "numeral";
 import "numeral/locales/pl";
-import React from "react";
+import * as React from "react";
 import { Provider as UrqlProvider } from "urql";
 import { client } from "../client/graphql/client";
 import "../client/styles/tailwind.css";

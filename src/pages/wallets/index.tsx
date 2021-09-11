@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
-import React from "react";
+import * as React from "react";
 import { getNextUrqlClient } from "src/client/graphql/client";
 import {
   useWalletsQuery,

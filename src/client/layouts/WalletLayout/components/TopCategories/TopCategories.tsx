@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { TopCategory } from "src/@types/Category";
 import { formatCurrency } from "src/client/helpers/formatCurrency";
 

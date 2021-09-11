@@ -1,6 +1,6 @@
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 import { Transaction } from "src/@types/Transaction";
 import { formatCurrency } from "src/client/helpers/formatCurrency";
 

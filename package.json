@@ -18,7 +18,10 @@
     "prisma:studio": "prisma studio",
     "seed:dev": "prisma db seed --preview-feature",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "watch:graphql-codegen": "yarn wait-on http://localhost:3000 && graphql-codegen --watch"
+    "watch:graphql-codegen": "yarn wait-on http://localhost:3000 && graphql-codegen --watch",
+    "sb": "run-p storybook:tailwind storybook:dev",
+    "storybook:tailwind": "tailwindcss -i ./src/client/styles/tailwind.css  -o ./.storybook/tailwind.css --watch",
+    "storybook:dev": "start-storybook -p 6006"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
