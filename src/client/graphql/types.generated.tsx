@@ -110,6 +110,14 @@ export type DeleteWalletMutationVariables = Exact<{
 
 export type DeleteWalletMutation = { deleteOneWallet?: Maybe<Pick<Wallet, 'id'>> };
 
+export type UpdateWalletMutationVariables = Exact<{
+  id: Scalars['String'];
+  data: WalletUpdateInput;
+}>;
+
+
+export type UpdateWalletMutation = { updateOneWallet?: Maybe<WalletSnippetFragment> };
+
 export type WalletQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -152,6 +160,17 @@ export const DeleteWalletDocument = gql`
 
 export function useDeleteWalletMutation() {
   return Urql.useMutation<DeleteWalletMutation, DeleteWalletMutationVariables>(DeleteWalletDocument);
+};
+export const UpdateWalletDocument = gql`
+    mutation UpdateWallet($id: String!, $data: WalletUpdateInput!) {
+  updateOneWallet(data: $data, where: {id: $id}) {
+    ...WalletSnippet
+  }
+}
+    ${WalletSnippetFragmentDoc}`;
+
+export function useUpdateWalletMutation() {
+  return Urql.useMutation<UpdateWalletMutation, UpdateWalletMutationVariables>(UpdateWalletDocument);
 };
 export const WalletDocument = gql`
     query Wallet($id: String!) {
