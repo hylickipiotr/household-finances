@@ -1,19 +1,57 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+enum Type {
+  INCOME
+  EXPENSE
 }
 
 model Wallet {
-  id             String @id @default(cuid())
-  name           String
+  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+
+  name           String @unique
   icon           String
   color          String
   initialBalance Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transaction Transaction[]
+}
+
+model Category {
+  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+
+  name         String        @unique
+  icon         String        @unique
+  type         Type
+  transactions Transaction[]
+  strategy     Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transaction {
+  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+
+  title  String
+  amount Float  @default(0)
+  type   Type   @default(EXPENSE)
+
+  walletId String @db.ObjectId
+  wallet   Wallet @relation(references: [id], fields: [walletId])
+
+  categories Category[] @relation(references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
