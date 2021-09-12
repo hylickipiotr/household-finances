@@ -16,6 +16,7 @@ import { FormGrid } from "src/components/Form";
 import { ControlledInput } from "src/components/Input/ControlledInput";
 import { useDialogContext } from "src/contexts/Dialog";
 import {
+  Color,
   useCreateWalletMutation,
   useUpdateWalletMutation,
 } from "src/generated/graphql-urql";
@@ -40,7 +41,7 @@ const formSchema = yup.object().shape({
 
 const defaultFromValues: WalletFormValues = {
   name: "",
-  color: "gray",
+  color: Color.Gray,
   icon: "🤑",
   initialBalance: "0",
 };

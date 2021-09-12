@@ -13,12 +13,23 @@ enum Type {
   EXPENSE
 }
 
+enum Color {
+  GRAY
+  BLUE
+  GREEN
+  YELLOW
+  ORANGE
+  PURPLE
+  PINK
+  INDIGO
+}
+
 model Wallet {
   id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
 
   name           String @unique
   icon           String
-  color          String
+  color          Color  @default(GRAY)
   initialBalance Float
 
   createdAt DateTime @default(now())

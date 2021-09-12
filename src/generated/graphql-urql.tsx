@@ -102,6 +102,17 @@ export type CategoryWhereUniqueInput = {
   name?: Maybe<Scalars['String']>;
 };
 
+export enum Color {
+  Blue = 'BLUE',
+  Gray = 'GRAY',
+  Green = 'GREEN',
+  Indigo = 'INDIGO',
+  Orange = 'ORANGE',
+  Pink = 'PINK',
+  Purple = 'PURPLE',
+  Yellow = 'YELLOW'
+}
+
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Maybe<Scalars['DateTime']>;
@@ -116,6 +127,10 @@ export type DateTimeFilter = {
   lte?: Maybe<Scalars['DateTime']>;
   not?: Maybe<NestedDateTimeFilter>;
   notIn?: Maybe<Array<Scalars['DateTime']>>;
+};
+
+export type EnumColorFieldUpdateOperationsInput = {
+  set?: Maybe<Color>;
 };
 
 export type EnumTypeFieldUpdateOperationsInput = {
@@ -360,7 +375,7 @@ export enum Type {
 }
 
 export type Wallet = {
-  color: Scalars['String'];
+  color: Color;
   icon: Scalars['String'];
   id: Scalars['String'];
   initialBalance: Scalars['Float'];
@@ -368,7 +383,7 @@ export type Wallet = {
 };
 
 export type WalletCreateInput = {
-  color: Scalars['String'];
+  color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   icon: Scalars['String'];
   id?: Maybe<Scalars['String']>;
@@ -379,7 +394,7 @@ export type WalletCreateInput = {
 };
 
 export type WalletUpdateInput = {
-  color?: Maybe<StringFieldUpdateOperationsInput>;
+  color?: Maybe<EnumColorFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   icon?: Maybe<StringFieldUpdateOperationsInput>;
   initialBalance?: Maybe<FloatFieldUpdateOperationsInput>;

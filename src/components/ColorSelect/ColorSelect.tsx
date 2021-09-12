@@ -3,7 +3,7 @@ import clsx from "clsx";
 import * as React from "react";
 import { BiCheck } from "react-icons/bi";
 import mergeRefs from "react-merge-refs";
-import { Color } from "src/types/Color";
+import { Color } from "src/generated/graphql-urql";
 
 type ColorSelectProps = {
   name?: string;
@@ -14,36 +14,27 @@ type ColorSelectProps = {
   className?: string;
 };
 
-const getColorCls = (color: Color) => {
-  switch (color) {
-    case "blue":
-      return "bg-blue-600";
-    case "green":
-      return "bg-green-600";
-    case "yellow":
-      return "bg-yellow-300";
-    case "orange":
-      return "bg-yellow-600";
-    case "purple":
-      return "bg-purple-600";
-    case "pink":
-      return "bg-pink-600";
-    case "indigo":
-      return "bg-indigo-600";
-    default:
-      return "bg-gray-500";
-  }
+const classes = {
+  color: {
+    [Color.Blue]: "bg-blue-600",
+    [Color.Gray]: "bg-gray-500",
+    [Color.Green]: "bg-green-600",
+    [Color.Indigo]: "bg-indigo-600",
+    [Color.Orange]: "bg-yellow-600",
+    [Color.Pink]: "bg-pink-600",
+    [Color.Purple]: "bg-purple-600",
+    [Color.Yellow]: "bg-yellow-300",
+  },
 };
 
 const defaultColors: Color[] = [
-  "green",
-  "yellow",
-  "orange",
-  "pink",
-  "blue",
-  "indigo",
-  "purple",
-  "gray",
+  Color.Green,
+  Color.Yellow,
+  Color.Orange,
+  Color.Pink,
+  Color.Indigo,
+  Color.Purple,
+  Color.Gray,
 ];
 
 const ColorSelect = React.forwardRef<HTMLButtonElement, ColorSelectProps>(
@@ -51,7 +42,7 @@ const ColorSelect = React.forwardRef<HTMLButtonElement, ColorSelectProps>(
     const {
       name,
       className,
-      defaultValue = "gray",
+      defaultValue = Color.Gray,
       colors = defaultColors,
     } = props;
     const innerRef = React.useRef<HTMLButtonElement>(null);
@@ -80,7 +71,7 @@ const ColorSelect = React.forwardRef<HTMLButtonElement, ColorSelectProps>(
             className="w-full pl-3 pr-12 h-10 flex items-center border border-gray-300 text-left text-base rounded-md transition-colors ease-out duration-75 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 focus:ring-opacity-20"
           >
             <span
-              className={clsx("w-2.5 h-2.5 rounded-full", getColorCls(value))}
+              className={clsx("w-2.5 h-2.5 rounded-full", classes.color[value])}
             />
             <span className="ml-3 text-sm text-gray-900 capitalize">
               {value}
@@ -109,7 +100,7 @@ const ColorSelect = React.forwardRef<HTMLButtonElement, ColorSelectProps>(
                   <span
                     className={clsx(
                       "w-2.5 h-2.5 rounded-full",
-                      getColorCls(color)
+                      classes.color[color]
                     )}
                   />
                   <span className="ml-3 text-sm text-gray-900 capitalize">
@@ -129,4 +120,4 @@ const ColorSelect = React.forwardRef<HTMLButtonElement, ColorSelectProps>(
 );
 
 export { ColorSelect };
-export type { Color, ColorSelectProps };
+export type { ColorSelectProps };
