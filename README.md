@@ -1,8 +1,20 @@
-# Inspiration
+# Household Finances
 
-- [fullstack-graphql-next-nexus-prisma](https://github.com/hexrcs/fullstack-graphql-next-nexus-prisma)
-- [Graphql-nexus-prisma-nextjs](https://github.com/15chrjef/Graphql-nexus-prisma-nextjs)
-- [nextjs-prisma-apollo-nexus-starter](https://github.com/schester44/nextjs-prisma-apollo-nexus-starter)
+This is a simple web application to managing and controlling own finances.
 
-- Filtring
-  - [Crud default filtering?](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/501)
+## Installation
+
+1. Create a postgres database
+1. Create a file `.env` based on `.env.sample`
+1. Install dependencies using `yarn`
+1. Setup database using command `yarn migrate:dev`
+1. Start app `yarn start`
+
+## Technologies
+
+- Next.js
+- Typescript
+- TailwindCSS
+- Prisma
+- PostgreSQL
+- GraphQL Nexus
