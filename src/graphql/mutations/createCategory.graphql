@@ -1,0 +1,5 @@
+mutation CreateCategory($data: CategoryCreateInput!) {
+  createOneCategory(data: $data) {
+    ...CategorySnippet
+  }
+}

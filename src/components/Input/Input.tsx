@@ -16,6 +16,7 @@ const Input: InputType = React.forwardRef((props, ref) => {
     <div className="relative w-full h-10">
       <input
         id={props.id || props.name}
+        name={name}
         autoComplete="off"
         className={clsx(
           "w-full pl-2.5 pr-12 h-full border border-gray-300 text-base rounded-md transition-colors ease-out duration-75 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 focus:ring-opacity-20",

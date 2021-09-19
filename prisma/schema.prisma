@@ -1,11 +1,10 @@
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
+  provider = "prisma-client-js"
 }
 
 enum Type {
@@ -25,12 +24,12 @@ enum Color {
 }
 
 model Wallet {
-  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id String @id @default(cuid())
 
   name           String @unique
   icon           String
   color          Color  @default(GRAY)
-  initialBalance Float
+  initialBalance Float  @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,26 +38,26 @@ model Wallet {
 }
 
 model Category {
-  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id String @id @default(cuid())
 
   name         String        @unique
   icon         String        @unique
-  type         Type
+  type         Type          @default(EXPENSE)
   transactions Transaction[]
-  strategy     Json
+  strategies   String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Transaction {
-  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id String @id @default(cuid())
 
   title  String
   amount Float  @default(0)
   type   Type   @default(EXPENSE)
 
-  walletId String @db.ObjectId
+  walletId String
   wallet   Wallet @relation(references: [id], fields: [walletId])
 
   categories Category[] @relation(references: [id])

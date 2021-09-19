@@ -2,6 +2,25 @@
 ### Do not make changes to this file directly
 
 
+type Category {
+  icon: String!
+  id: String!
+  name: String!
+  strategies: [String!]!
+  type: Type!
+}
+
+input CategoryCreateInput {
+  createdAt: DateTime
+  icon: String!
+  id: String
+  name: String!
+  strategies: CategoryCreatestrategiesInput
+  transactions: TransactionCreateNestedManyWithoutCategoriesInput
+  type: Type
+  updatedAt: DateTime
+}
+
 input CategoryCreateNestedManyWithoutTransactionsInput {
   connect: [CategoryWhereUniqueInput!]
   connectOrCreate: [CategoryCreateOrConnectWithoutTransactionsInput!]
@@ -18,9 +37,30 @@ input CategoryCreateWithoutTransactionsInput {
   icon: String!
   id: String
   name: String!
-  strategy: Json!
-  type: Type!
+  strategies: CategoryCreatestrategiesInput
+  type: Type
   updatedAt: DateTime
+}
+
+input CategoryCreatestrategiesInput {
+  set: [String!]
+}
+
+input CategoryListRelationFilter {
+  every: CategoryWhereInput
+  none: CategoryWhereInput
+  some: CategoryWhereInput
+}
+
+input CategoryOrderByWithRelationInput {
+  createdAt: SortOrder
+  icon: SortOrder
+  id: SortOrder
+  name: SortOrder
+  strategies: SortOrder
+  transactions: TransactionOrderByRelationAggregateInput
+  type: SortOrder
+  updatedAt: SortOrder
 }
 
 input CategoryScalarWhereInput {
@@ -31,15 +71,28 @@ input CategoryScalarWhereInput {
   icon: StringFilter
   id: StringFilter
   name: StringFilter
+  strategies: StringNullableListFilter
   type: EnumTypeFilter
   updatedAt: DateTimeFilter
+}
+
+input CategoryUpdateInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  icon: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  strategies: CategoryUpdatestrategiesInput
+  transactions: TransactionUpdateManyWithoutCategoriesInput
+  type: EnumTypeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
 input CategoryUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   icon: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  strategy: Json
+  strategies: CategoryUpdatestrategiesInput
   type: EnumTypeFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -70,10 +123,16 @@ input CategoryUpdateWithWhereUniqueWithoutTransactionsInput {
 input CategoryUpdateWithoutTransactionsInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   icon: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  strategy: Json
+  strategies: CategoryUpdatestrategiesInput
   type: EnumTypeFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input CategoryUpdatestrategiesInput {
+  push: String
+  set: [String!]
 }
 
 input CategoryUpsertWithWhereUniqueWithoutTransactionsInput {
@@ -82,10 +141,35 @@ input CategoryUpsertWithWhereUniqueWithoutTransactionsInput {
   where: CategoryWhereUniqueInput!
 }
 
+input CategoryWhereInput {
+  AND: [CategoryWhereInput!]
+  NOT: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  createdAt: DateTimeFilter
+  icon: StringFilter
+  id: StringFilter
+  name: StringFilter
+  strategies: StringNullableListFilter
+  transactions: TransactionListRelationFilter
+  type: EnumTypeFilter
+  updatedAt: DateTimeFilter
+}
+
 input CategoryWhereUniqueInput {
   icon: String
   id: String
   name: String
+}
+
+enum Color {
+  BLUE
+  GRAY
+  GREEN
+  INDIGO
+  ORANGE
+  PINK
+  PURPLE
+  YELLOW
 }
 
 scalar DateTime
@@ -103,6 +187,17 @@ input DateTimeFilter {
   lte: DateTime
   not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input EnumColorFieldUpdateOperationsInput {
+  set: Color
+}
+
+input EnumColorFilter {
+  equals: Color
+  in: [Color!]
+  not: NestedEnumColorFilter
+  notIn: [Color!]
 }
 
 input EnumTypeFieldUpdateOperationsInput {
@@ -135,11 +230,12 @@ input FloatFilter {
   notIn: [Float!]
 }
 
-scalar Json
-
 type Mutation {
+  createOneCategory(data: CategoryCreateInput!): Category!
   createOneWallet(data: WalletCreateInput!): Wallet!
+  deleteOneCategory(where: CategoryWhereUniqueInput!): Category
   deleteOneWallet(where: WalletWhereUniqueInput!): Wallet
+  updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateOneWallet(data: WalletUpdateInput!, where: WalletWhereUniqueInput!): Wallet
 }
 
@@ -152,6 +248,13 @@ input NestedDateTimeFilter {
   lte: DateTime
   not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input NestedEnumColorFilter {
+  equals: Color
+  in: [Color!]
+  not: NestedEnumColorFilter
+  notIn: [Color!]
 }
 
 input NestedEnumTypeFilter {
@@ -187,6 +290,8 @@ input NestedStringFilter {
 }
 
 type Query {
+  categories(cursor: CategoryWhereUniqueInput, orderBy: [CategoryOrderByWithRelationInput!], skip: Int, take: Int, where: CategoryWhereInput): [Category!]!
+  category(where: CategoryWhereUniqueInput!): Category
   wallet(where: WalletWhereUniqueInput!): Wallet
   wallets(cursor: WalletWhereUniqueInput, skip: Int, take: Int): [Wallet!]!
 }
@@ -194,6 +299,11 @@ type Query {
 enum QueryMode {
   default
   insensitive
+}
+
+enum SortOrder {
+  asc
+  desc
 }
 
 input StringFieldUpdateOperationsInput {
@@ -215,6 +325,14 @@ input StringFilter {
   startsWith: String
 }
 
+input StringNullableListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
+}
+
 input TransactionCreateManyWalletInput {
   amount: Float
   createdAt: DateTime
@@ -226,6 +344,13 @@ input TransactionCreateManyWalletInput {
 
 input TransactionCreateManyWalletInputEnvelope {
   data: [TransactionCreateManyWalletInput!]
+  skipDuplicates: Boolean
+}
+
+input TransactionCreateNestedManyWithoutCategoriesInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutCategoriesInput!]
+  create: [TransactionCreateWithoutCategoriesInput!]
 }
 
 input TransactionCreateNestedManyWithoutWalletInput {
@@ -235,9 +360,24 @@ input TransactionCreateNestedManyWithoutWalletInput {
   createMany: TransactionCreateManyWalletInputEnvelope
 }
 
+input TransactionCreateOrConnectWithoutCategoriesInput {
+  create: TransactionCreateWithoutCategoriesInput!
+  where: TransactionWhereUniqueInput!
+}
+
 input TransactionCreateOrConnectWithoutWalletInput {
   create: TransactionCreateWithoutWalletInput!
   where: TransactionWhereUniqueInput!
+}
+
+input TransactionCreateWithoutCategoriesInput {
+  amount: Float
+  createdAt: DateTime
+  id: String
+  title: String!
+  type: Type
+  updatedAt: DateTime
+  wallet: WalletCreateNestedOneWithoutTransactionInput!
 }
 
 input TransactionCreateWithoutWalletInput {
@@ -248,6 +388,16 @@ input TransactionCreateWithoutWalletInput {
   title: String!
   type: Type
   updatedAt: DateTime
+}
+
+input TransactionListRelationFilter {
+  every: TransactionWhereInput
+  none: TransactionWhereInput
+  some: TransactionWhereInput
+}
+
+input TransactionOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input TransactionScalarWhereInput {
@@ -266,14 +416,33 @@ input TransactionScalarWhereInput {
 input TransactionUpdateManyMutationInput {
   amount: FloatFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   type: EnumTypeFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
+input TransactionUpdateManyWithWhereWithoutCategoriesInput {
+  data: TransactionUpdateManyMutationInput!
+  where: TransactionScalarWhereInput!
+}
+
 input TransactionUpdateManyWithWhereWithoutWalletInput {
   data: TransactionUpdateManyMutationInput!
   where: TransactionScalarWhereInput!
+}
+
+input TransactionUpdateManyWithoutCategoriesInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutCategoriesInput!]
+  create: [TransactionCreateWithoutCategoriesInput!]
+  delete: [TransactionWhereUniqueInput!]
+  deleteMany: [TransactionScalarWhereInput!]
+  disconnect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
+  update: [TransactionUpdateWithWhereUniqueWithoutCategoriesInput!]
+  updateMany: [TransactionUpdateManyWithWhereWithoutCategoriesInput!]
+  upsert: [TransactionUpsertWithWhereUniqueWithoutCategoriesInput!]
 }
 
 input TransactionUpdateManyWithoutWalletInput {
@@ -290,24 +459,61 @@ input TransactionUpdateManyWithoutWalletInput {
   upsert: [TransactionUpsertWithWhereUniqueWithoutWalletInput!]
 }
 
+input TransactionUpdateWithWhereUniqueWithoutCategoriesInput {
+  data: TransactionUpdateWithoutCategoriesInput!
+  where: TransactionWhereUniqueInput!
+}
+
 input TransactionUpdateWithWhereUniqueWithoutWalletInput {
   data: TransactionUpdateWithoutWalletInput!
   where: TransactionWhereUniqueInput!
+}
+
+input TransactionUpdateWithoutCategoriesInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  type: EnumTypeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  wallet: WalletUpdateOneRequiredWithoutTransactionInput
 }
 
 input TransactionUpdateWithoutWalletInput {
   amount: FloatFieldUpdateOperationsInput
   categories: CategoryUpdateManyWithoutTransactionsInput
   createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   type: EnumTypeFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input TransactionUpsertWithWhereUniqueWithoutCategoriesInput {
+  create: TransactionCreateWithoutCategoriesInput!
+  update: TransactionUpdateWithoutCategoriesInput!
+  where: TransactionWhereUniqueInput!
 }
 
 input TransactionUpsertWithWhereUniqueWithoutWalletInput {
   create: TransactionCreateWithoutWalletInput!
   update: TransactionUpdateWithoutWalletInput!
   where: TransactionWhereUniqueInput!
+}
+
+input TransactionWhereInput {
+  AND: [TransactionWhereInput!]
+  NOT: [TransactionWhereInput!]
+  OR: [TransactionWhereInput!]
+  amount: FloatFilter
+  categories: CategoryListRelationFilter
+  createdAt: DateTimeFilter
+  id: StringFilter
+  title: StringFilter
+  type: EnumTypeFilter
+  updatedAt: DateTimeFilter
+  wallet: WalletWhereInput
+  walletId: StringFilter
 }
 
 input TransactionWhereUniqueInput {
@@ -320,7 +526,7 @@ enum Type {
 }
 
 type Wallet {
-  color: String!
+  color: Color!
   icon: String!
   id: String!
   initialBalance: Float!
@@ -328,24 +534,83 @@ type Wallet {
 }
 
 input WalletCreateInput {
-  color: String!
+  color: Color
   createdAt: DateTime
   icon: String!
   id: String
-  initialBalance: Float!
+  initialBalance: Float
   name: String!
   transaction: TransactionCreateNestedManyWithoutWalletInput
   updatedAt: DateTime
 }
 
+input WalletCreateNestedOneWithoutTransactionInput {
+  connect: WalletWhereUniqueInput
+  connectOrCreate: WalletCreateOrConnectWithoutTransactionInput
+  create: WalletCreateWithoutTransactionInput
+}
+
+input WalletCreateOrConnectWithoutTransactionInput {
+  create: WalletCreateWithoutTransactionInput!
+  where: WalletWhereUniqueInput!
+}
+
+input WalletCreateWithoutTransactionInput {
+  color: Color
+  createdAt: DateTime
+  icon: String!
+  id: String
+  initialBalance: Float
+  name: String!
+  updatedAt: DateTime
+}
+
 input WalletUpdateInput {
-  color: StringFieldUpdateOperationsInput
+  color: EnumColorFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   icon: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   initialBalance: FloatFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   transaction: TransactionUpdateManyWithoutWalletInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input WalletUpdateOneRequiredWithoutTransactionInput {
+  connect: WalletWhereUniqueInput
+  connectOrCreate: WalletCreateOrConnectWithoutTransactionInput
+  create: WalletCreateWithoutTransactionInput
+  update: WalletUpdateWithoutTransactionInput
+  upsert: WalletUpsertWithoutTransactionInput
+}
+
+input WalletUpdateWithoutTransactionInput {
+  color: EnumColorFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  icon: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  initialBalance: FloatFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input WalletUpsertWithoutTransactionInput {
+  create: WalletCreateWithoutTransactionInput!
+  update: WalletUpdateWithoutTransactionInput!
+}
+
+input WalletWhereInput {
+  AND: [WalletWhereInput!]
+  NOT: [WalletWhereInput!]
+  OR: [WalletWhereInput!]
+  color: EnumColorFilter
+  createdAt: DateTimeFilter
+  icon: StringFilter
+  id: StringFilter
+  initialBalance: FloatFilter
+  name: StringFilter
+  transaction: TransactionListRelationFilter
+  updatedAt: DateTimeFilter
 }
 
 input WalletWhereUniqueInput {

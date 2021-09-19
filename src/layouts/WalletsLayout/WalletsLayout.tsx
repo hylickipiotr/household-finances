@@ -2,8 +2,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as React from "react";
 import { BiPlus } from "react-icons/bi";
 import { Layout } from "src/components/Layout";
-import { DialogProvider, useDialog } from "src/contexts/Dialog";
+import { DialogProvider } from "src/contexts/Dialog";
 import { WalletsContextValue, WalletsProvider } from "src/contexts/Wallets";
+import { useDialog } from "src/hooks/useDialog";
 import { WalletsList } from "src/layouts/WalletsLayout/components/WalletsList";
 import { WalletDialog } from "./components/WalletDialog";
 

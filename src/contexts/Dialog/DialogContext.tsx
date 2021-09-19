@@ -8,15 +8,6 @@ type DialogContextValue = {
 
 const [DialogContext, useDialogContext] = createContext<DialogContextValue>();
 
-const useDialog = (defaultOpen = false) => {
-  const [open, onOpenChange] = React.useState(defaultOpen);
-
-  return {
-    open,
-    onOpenChange,
-  };
-};
-
 const DialogProvider = DialogContext.Provider;
 
-export { DialogProvider, useDialog, useDialogContext };
+export { DialogProvider, useDialogContext };

@@ -1,6 +1,6 @@
 import tw from "tailwind-styled-components";
 
-const FormGrid = tw.div`
+const FormGrid = tw.form`
   grid 
   grid-cols-12 
   gap-y-6 

@@ -1245,21 +1245,20 @@
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-primitive" "0.1.0"
 
-"@radix-ui/react-collapsible@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-collapsible/-/react-collapsible-0.0.16.tgz#6a99068f70bb85a60f8cbd43f093bd3053ab61cc"
-  integrity sha512-kY9wojEbrpTge6sz3BZl1oXer2Szhi+MW60TSDf14mL6l8+e4ugp5y2ItGDjcW5B7AzL00dsMtqlxuAkhFjWxQ==
+"@radix-ui/react-collapsible@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-collapsible/-/react-collapsible-0.1.0.tgz#62276b5300de7db9b9a809fd0996165890de0805"
+  integrity sha512-YpNvWn35oTOG5ROujE4De+Y95Yt45x5XFjfQiUqbnUCOwviNMO5e1pnM1ycCI0vHabNmLP3EaTPzGx+eTffRVQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@radix-ui/primitive" "0.0.5"
-    "@radix-ui/react-compose-refs" "0.0.5"
-    "@radix-ui/react-context" "0.0.5"
-    "@radix-ui/react-id" "0.0.6"
-    "@radix-ui/react-polymorphic" "0.0.12"
-    "@radix-ui/react-presence" "0.0.14"
-    "@radix-ui/react-primitive" "0.0.14"
-    "@radix-ui/react-use-controllable-state" "0.0.6"
-    "@radix-ui/react-use-layout-effect" "0.0.5"
+    "@radix-ui/primitive" "0.1.0"
+    "@radix-ui/react-compose-refs" "0.1.0"
+    "@radix-ui/react-context" "0.1.0"
+    "@radix-ui/react-id" "0.1.0"
+    "@radix-ui/react-presence" "0.1.0"
+    "@radix-ui/react-primitive" "0.1.0"
+    "@radix-ui/react-use-controllable-state" "0.1.0"
+    "@radix-ui/react-use-layout-effect" "0.1.0"
 
 "@radix-ui/react-collection@0.1.0":
   version "0.1.0"
@@ -1433,11 +1432,6 @@
     aria-hidden "^1.1.1"
     react-remove-scroll "^2.4.0"
 
-"@radix-ui/react-polymorphic@0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-polymorphic/-/react-polymorphic-0.0.12.tgz#bf4ae516669b68e059549538104d97322f7c876b"
-  integrity sha512-/GYNMicBnGzjD1d2fCAuzql1VeFrp8mqM3xfzT1kxhnV85TKdURO45jBfMgqo17XNXoNhWIAProUsCO4qFAAIg==
-
 "@radix-ui/react-polymorphic@0.0.13":
   version "0.0.13"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-polymorphic/-/react-polymorphic-0.0.13.tgz#d010d48281626191c9513f11db5d82b37662418a"
@@ -1516,14 +1510,6 @@
     "@radix-ui/react-primitive" "0.1.0"
     "@radix-ui/react-use-layout-effect" "0.1.0"
 
-"@radix-ui/react-presence@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-presence/-/react-presence-0.0.14.tgz#6a86058bbbf46234dd8840dacd620b3ac5797025"
-  integrity sha512-ufof9B76DHXV0sC8H7Lswh2AepdJFG8qEtF32JWrbA9N1bl2Jnf9px76KsagyC0MA8crGEZO5A96wizGuSgGWQ==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@radix-ui/react-compose-refs" "0.0.5"
-
 "@radix-ui/react-presence@0.0.15":
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-presence/-/react-presence-0.0.15.tgz#4ff12feb436f1499148feb11c3a63a5d8fab568a"
@@ -1541,14 +1527,6 @@
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-compose-refs" "0.1.0"
     "@radix-ui/react-use-layout-effect" "0.1.0"
-
-"@radix-ui/react-primitive@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-primitive/-/react-primitive-0.0.14.tgz#752a967cb05d4c5643634fe20274e7dc905d1cce"
-  integrity sha512-FYOWGCrxFpLdB534aWTwMK4Pjg8cxFb+745qWhPfI+cYi+aYUddJQD3ilRHHXxCBD72ve7/PufqeB7Y/QlKqgg==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@radix-ui/react-polymorphic" "0.0.12"
 
 "@radix-ui/react-primitive@0.0.15":
   version "0.0.15"

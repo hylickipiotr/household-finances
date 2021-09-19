@@ -1,7 +1,7 @@
 module.exports = {
   overwrite: true,
   schema: "src/generated/schema.graphql",
-  documents: "src/**/*.graphql",
+  documents: "src/graphql/**/*.graphql",
   generates: {
     "src/generated/graphql-urql.tsx": {
       config: {
