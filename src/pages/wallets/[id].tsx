@@ -1,13 +1,10 @@
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
-import { WalletProvider } from "src/client/contexts/Wallet";
-import { getNextUrqlClient } from "src/client/graphql/client";
-import {
-  useWalletQuery,
-  WalletDocument,
-} from "src/client/graphql/types.generated";
-import { withUrqlClient } from "src/client/helpers/withUrqlClient";
-import { WalletLayout } from "src/client/layouts/WalletLayout";
+import { WalletProvider } from "src/contexts/Wallet";
+import { useWalletQuery, WalletDocument } from "src/generated/graphql-urql";
+import { withUrqlClient } from "src/helpers/withUrqlClient";
+import { WalletLayout } from "src/layouts/WalletLayout";
+import { getNextUrqlClient } from "src/lib/urql/client";
 
 type WalletPageProps = {
   id: string;

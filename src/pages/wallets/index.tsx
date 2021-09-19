@@ -1,12 +1,9 @@
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
-import { getNextUrqlClient } from "src/client/graphql/client";
-import {
-  useWalletsQuery,
-  WalletsDocument,
-} from "src/client/graphql/types.generated";
-import { withUrqlClient } from "src/client/helpers/withUrqlClient";
-import { WalletsLayout } from "src/client/layouts/WalletsLayout";
+import { useWalletsQuery, WalletsDocument } from "src/generated/graphql-urql";
+import { withUrqlClient } from "src/helpers/withUrqlClient";
+import { WalletsLayout } from "src/layouts/WalletsLayout";
+import { getNextUrqlClient } from "src/lib/urql/client";
 
 const Wallets: NextPage = () => {
   const [{ data }] = useWalletsQuery();

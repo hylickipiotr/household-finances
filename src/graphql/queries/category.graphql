@@ -1,0 +1,5 @@
+query Category($where: CategoryWhereUniqueInput!) {
+  category(where: $where) {
+    ...CategorySnippet
+  }
+}

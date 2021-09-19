@@ -1,12 +1,11 @@
 module.exports = {
   overwrite: true,
-  schema: "http://localhost:3000/api/graphql",
-  documents: "src/client/**/*.graphql",
+  schema: "src/generated/schema.graphql",
+  documents: "src/graphql/**/*.graphql",
   generates: {
-    "src/client/graphql/types.generated.tsx": {
+    "src/generated/graphql-urql.tsx": {
       config: {
         withHooks: true,
-        withComponent: false,
         scalars: {
           DateTime: "string",
         },

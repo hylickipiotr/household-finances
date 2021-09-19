@@ -1,0 +1,5 @@
+mutation UpdateCategory($id: String!, $data: CategoryUpdateInput!) {
+  updateOneCategory(data: $data, where: { id: $id }) {
+    ...CategorySnippet
+  }
+}

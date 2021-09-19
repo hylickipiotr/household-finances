@@ -6,9 +6,9 @@ import { AppProps } from "next/app";
 import numeral from "numeral";
 import "numeral/locales/pl";
 import * as React from "react";
+import { client } from "src/lib/urql";
+import "src/styles/tailwind.css";
 import { Provider as UrqlProvider } from "urql";
-import { client } from "../client/graphql/client";
-import "../client/styles/tailwind.css";
 
 numeral.locale("pl");
 dayjs.locale("pl");
