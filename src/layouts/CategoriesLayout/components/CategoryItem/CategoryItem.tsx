@@ -34,14 +34,12 @@ items-center
 px-6
 h-16
 rounded-lg
-border
-border-gray-300
-shadow-sm
+shadow-airbnb-4
 cursor-pointer
 transition
 duration-75
 hover:border-gray-400
-hover:shadow
+hover:shadow-airbnb-4
 `;
 
 const StyledIcon = tw.span`

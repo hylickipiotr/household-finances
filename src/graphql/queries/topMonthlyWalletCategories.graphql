@@ -1,0 +1,9 @@
+query TopMonthlyWalletCategories(
+  $walletId: String!
+  $date: String!
+  $take: Int
+) {
+  topMonthlyWalletCategories(walletId: $walletId, date: $date, take: $take) {
+    ...TopCategorySnippet
+  }
+}

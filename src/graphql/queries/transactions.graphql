@@ -1,0 +1,8 @@
+query Transactions(
+  $where: TransactionWhereInput
+  $orderBy: [TransactionOrderByWithRelationInput!]
+) {
+  transactions(where: $where, orderBy: $orderBy) {
+    ...TransactionSnippet
+  }
+}

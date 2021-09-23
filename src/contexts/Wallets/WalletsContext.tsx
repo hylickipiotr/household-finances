@@ -1,14 +1,11 @@
+import { WalletStatisticsSnippetFragment } from "src/generated/graphql-urql";
 import { createContext } from "src/helpers/createContext";
-import { Wallet } from "src/types/Wallet";
 
-type WalletsContextValue = {
-  wallets: Wallet[];
-};
+type WalletsContextValue = WalletStatisticsSnippetFragment[];
 
-const [
-  WalletsContext,
-  useWalletsContext,
-] = createContext<WalletsContextValue>();
+const [WalletsContext, useWalletsContext] = createContext<WalletsContextValue>(
+  "Wallets"
+);
 
 const WalletsProvider = WalletsContext.Provider;
 

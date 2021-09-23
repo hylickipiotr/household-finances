@@ -3,7 +3,9 @@ import { createContext } from "src/helpers/createContext";
 
 type WalletContextValue = WalletSnippetFragment;
 
-const [WalletContext, useWalletContext] = createContext<WalletContextValue>();
+const [WalletContext, useWalletContext] = createContext<WalletContextValue>(
+  "Wallet"
+);
 
 const WalletProvider = WalletContext.Provider;
 

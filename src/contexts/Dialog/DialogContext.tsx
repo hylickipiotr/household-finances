@@ -6,7 +6,9 @@ type DialogContextValue = {
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const [DialogContext, useDialogContext] = createContext<DialogContextValue>();
+const [DialogContext, useDialogContext] = createContext<DialogContextValue>(
+  "Dialog"
+);
 
 const DialogProvider = DialogContext.Provider;
 

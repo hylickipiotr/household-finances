@@ -3,18 +3,21 @@ import * as React from "react";
 import { BiPlus } from "react-icons/bi";
 import { Layout } from "src/components/Layout";
 import { DialogProvider } from "src/contexts/Dialog";
-import { WalletsContextValue, WalletsProvider } from "src/contexts/Wallets";
+import { WalletsProvider } from "src/contexts/Wallets";
+import { WalletStatisticsSnippetFragment } from "src/generated/graphql-urql";
 import { useDialog } from "src/hooks/useDialog";
 import { WalletsList } from "src/layouts/WalletsLayout/components/WalletsList";
 import { WalletDialog } from "./components/WalletDialog";
 
-type WalletsLayoutProps = WalletsContextValue;
+type WalletsLayoutProps = {
+  wallets: WalletStatisticsSnippetFragment[];
+};
 
 const WalletsLayout: React.VFC<WalletsLayoutProps> = ({ wallets }) => {
   const dialogContext = useDialog();
 
   return (
-    <WalletsProvider value={{ wallets }}>
+    <WalletsProvider value={wallets}>
       <Layout>
         <div className="space-y-8">
           <div className="flex items-start justify-between">

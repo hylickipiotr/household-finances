@@ -8,7 +8,7 @@ type CategoriesContextValue = {
 const [
   CategoriesContext,
   useCategoriesContext,
-] = createContext<CategoriesContextValue>();
+] = createContext<CategoriesContextValue>("Categories");
 
 const CategoriesProvider = CategoriesContext.Provider;
 

@@ -10,5 +10,4 @@ const Wallet = objectType({
     t.model.initialBalance();
   },
 });
-
 export { Wallet };

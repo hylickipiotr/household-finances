@@ -1,5 +1,5 @@
-query Category($where: CategoryWhereUniqueInput!) {
-  category(where: $where) {
+query Category($id: String!) {
+  category(where: { id: $id }) {
     ...CategorySnippet
   }
 }

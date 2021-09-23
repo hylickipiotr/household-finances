@@ -4,34 +4,34 @@ import { RiPieChart2Fill } from "react-icons/ri";
 import { OverviewCard } from "./OverviewCard";
 
 type WalletOverviewProps = {
-  totalIncomes: number;
-  totalExpenses: number;
+  incomes?: number;
+  expenses?: number;
+  balance?: number;
 };
 
-const WalletOverview: React.VFC<WalletOverviewProps> = ({
-  totalIncomes,
-  totalExpenses,
-}) => {
+const WalletOverview: React.VFC<WalletOverviewProps> = (props) => {
+  const { incomes = 0, expenses = 0, balance = 0 } = props;
+
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold text-gray-900">Overview</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <OverviewCard
-          label="Total Balance"
+          label="Monthly Balance"
           icon={<RiPieChart2Fill />}
-          amount={totalIncomes - totalExpenses}
+          amount={balance}
           color="purple"
         />
         <OverviewCard
-          label="Total Incomes"
+          label="Monthly Incomes"
           icon={<HiTrendingUp />}
-          amount={totalIncomes}
+          amount={incomes}
           color="green"
         />
         <OverviewCard
-          label="Total Expenses"
+          label="Monthly Expenses"
           icon={<HiTrendingDown />}
-          amount={-totalExpenses}
+          amount={-expenses}
           color="red"
         />
       </div>

@@ -30,7 +30,7 @@ const OverviewCard: React.VFC<OverviewCardProps> = ({
   color,
 }) => {
   return (
-    <div className="flex flex-col justify-between h-40 p-6 bg-white border border-gray-300 rounded-xl">
+    <div className="flex flex-col justify-between h-40 p-6 bg-white  rounded-xl shadow-airbnb-2">
       <i className={classes.icon.color[color]}>
         {cloneNode(icon, { className: "w-8 h-8 " })}
       </i>

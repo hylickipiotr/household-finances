@@ -4,9 +4,4 @@ type Category = {
   icon: string;
 };
 
-type TopCategory = Pick<Category, "id" | "name" | "icon"> & {
-  totalAmount: number;
-  transactionCount: number;
-};
-
-export type { Category, TopCategory };
+export type { Category };

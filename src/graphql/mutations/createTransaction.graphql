@@ -1,0 +1,5 @@
+mutation CreateTransaction($data: TransactionCreateInput!) {
+  createOneTransaction(data: $data) {
+    ...TransactionSnippet
+  }
+}

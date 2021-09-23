@@ -1,0 +1,7 @@
+fragment TopCategorySnippet on TopCategory {
+  category {
+    ...CategorySnippet
+  }
+  amount
+  transactionsCount
+}

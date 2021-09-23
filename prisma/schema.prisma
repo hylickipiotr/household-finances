@@ -34,17 +34,18 @@ model Wallet {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  transaction Transaction[]
+  transactions Transaction[]
 }
 
 model Category {
   id String @id @default(cuid())
 
-  name         String        @unique
-  icon         String        @unique
-  type         Type          @default(EXPENSE)
+  name       String   @unique
+  icon       String   @unique
+  type       Type     @default(EXPENSE)
+  strategies String[]
+
   transactions Transaction[]
-  strategies   String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,14 +54,16 @@ model Category {
 model Transaction {
   id String @id @default(cuid())
 
-  title  String
-  amount Float  @default(0)
-  type   Type   @default(EXPENSE)
+  title       String
+  amount      Float    @default(0)
+  date        DateTime
+  description String?  @default("")
 
   walletId String
   wallet   Wallet @relation(references: [id], fields: [walletId])
 
-  categories Category[] @relation(references: [id])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

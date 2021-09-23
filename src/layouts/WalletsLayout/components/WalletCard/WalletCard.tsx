@@ -1,9 +1,11 @@
 import clsx from "clsx";
 import Link from "next/link";
 import * as React from "react";
-import { Color } from "src/generated/graphql-urql";
+import {
+  Color,
+  WalletStatisticsSnippetFragment,
+} from "src/generated/graphql-urql";
 import { formatCurrency } from "src/helpers/formatCurrency";
-import { Wallet } from "src/types/Wallet";
 
 const classes = {
   color: {
@@ -18,26 +20,17 @@ const classes = {
   },
 };
 
-type WalletCardProps = Wallet & {
-  onClick?: (id: string, event: React.MouseEvent<HTMLLIElement>) => void;
-};
+type WalletCardProps = WalletStatisticsSnippetFragment;
 
-const WalletCard: React.VFC<WalletCardProps> = ({
-  id,
-  name,
-  icon,
-  color,
-  initialBalance,
-  onClick,
-}) => {
+const WalletCard: React.VFC<WalletCardProps> = ({ wallet, totalAmount }) => {
+  const { id, color, icon, name } = wallet;
   const walletPath = `/wallets/${id}`;
 
   return (
     <Link href={walletPath}>
       <li
         className={clsx(
-          "relative flex flex-col justify-between w-full h-48 p-8 bg-gray-100 border border-gray-200 rounded-xl overflow-hidden before:absolute before:left-0 before:bottom-0 before:w-full before:h-2.5 before:transform before:translate-y-1 before:transition-transform before:ease-in-out before:duration-150 hover:before:translate-y-0 focus:outline-none focus:before:translate-y-0",
-          onClick && "cursor-pointer",
+          "relative flex flex-col justify-between w-full h-48 p-8 bg-white  rounded-xl shadow-airbnb-3 overflow-hidden cursor-pointer before:absolute before:left-0 before:bottom-0 before:w-full before:h-2.5 before:transform before:translate-y-1 before:transition-transform before:ease-in-out before:duration-150 hover:before:translate-y-0 focus:outline-none focus:before:translate-y-0",
           classes.color[color]
         )}
         tabIndex={0}
@@ -47,7 +40,7 @@ const WalletCard: React.VFC<WalletCardProps> = ({
             {icon}
           </span>
           <div className="text-lg text-gray-500 font-finance">
-            {formatCurrency(initialBalance)}
+            {formatCurrency(totalAmount)}
           </div>
         </div>
         <p className="text-3xl text-gray-900 font-semibold truncate">{name}</p>

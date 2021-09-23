@@ -1,0 +1,6 @@
+fragment WalletStatisticsSnippet on WalletStatistics {
+  wallet {
+    ...WalletSnippet
+  }
+  totalAmount
+}

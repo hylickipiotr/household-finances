@@ -1,0 +1,19 @@
+fragment TransactionSnippet on Transaction {
+  id
+
+  title
+  date
+  amount
+  description
+
+  category {
+    id
+    name
+    icon
+  }
+
+  wallet {
+    id
+    name
+  }
+}

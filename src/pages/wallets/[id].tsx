@@ -1,6 +1,10 @@
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
+import { DateProvider } from "src/contexts/Date";
+import { TopCategoriesProvider } from "src/contexts/TopCategories";
+import { TransactionProvider } from "src/contexts/Transactions";
 import { WalletProvider } from "src/contexts/Wallet";
+import { WalletMonthlyOverviewProvider } from "src/contexts/WalletMonthlyOverview";
 import { useWalletQuery, WalletDocument } from "src/generated/graphql-urql";
 import { withUrqlClient } from "src/helpers/withUrqlClient";
 import { WalletLayout } from "src/layouts/WalletLayout";
@@ -17,7 +21,15 @@ const WalletPage: NextPage<WalletPageProps> = ({ id }) => {
 
   return (
     <WalletProvider value={data.wallet}>
-      <WalletLayout />
+      <DateProvider>
+        <TopCategoriesProvider>
+          <WalletMonthlyOverviewProvider>
+            <TransactionProvider>
+              <WalletLayout />
+            </TransactionProvider>
+          </WalletMonthlyOverviewProvider>
+        </TopCategoriesProvider>
+      </DateProvider>
     </WalletProvider>
   );
 };

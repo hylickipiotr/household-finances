@@ -1,0 +1,5 @@
+query WalletMonthlyOverview($id: String!, $date: String!) {
+  walletMonthlyOverview(id: $id, date: $date) {
+    ...WalletMonthlyOverviewSnippet
+  }
+}

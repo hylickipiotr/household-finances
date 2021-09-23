@@ -29,15 +29,15 @@ export type CategoryCreateInput = {
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   strategies?: Maybe<CategoryCreatestrategiesInput>;
-  transactions?: Maybe<TransactionCreateNestedManyWithoutCategoriesInput>;
+  transactions?: Maybe<TransactionCreateNestedManyWithoutCategoryInput>;
   type?: Maybe<Type>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type CategoryCreateNestedManyWithoutTransactionsInput = {
-  connect?: Maybe<Array<CategoryWhereUniqueInput>>;
-  connectOrCreate?: Maybe<Array<CategoryCreateOrConnectWithoutTransactionsInput>>;
-  create?: Maybe<Array<CategoryCreateWithoutTransactionsInput>>;
+export type CategoryCreateNestedOneWithoutTransactionsInput = {
+  connect?: Maybe<CategoryWhereUniqueInput>;
+  connectOrCreate?: Maybe<CategoryCreateOrConnectWithoutTransactionsInput>;
+  create?: Maybe<CategoryCreateWithoutTransactionsInput>;
 };
 
 export type CategoryCreateOrConnectWithoutTransactionsInput = {
@@ -59,12 +59,6 @@ export type CategoryCreatestrategiesInput = {
   set?: Maybe<Array<Scalars['String']>>;
 };
 
-export type CategoryListRelationFilter = {
-  every?: Maybe<CategoryWhereInput>;
-  none?: Maybe<CategoryWhereInput>;
-  some?: Maybe<CategoryWhereInput>;
-};
-
 export type CategoryOrderByWithRelationInput = {
   createdAt?: Maybe<SortOrder>;
   icon?: Maybe<SortOrder>;
@@ -76,61 +70,23 @@ export type CategoryOrderByWithRelationInput = {
   updatedAt?: Maybe<SortOrder>;
 };
 
-export type CategoryScalarWhereInput = {
-  AND?: Maybe<Array<CategoryScalarWhereInput>>;
-  NOT?: Maybe<Array<CategoryScalarWhereInput>>;
-  OR?: Maybe<Array<CategoryScalarWhereInput>>;
-  createdAt?: Maybe<DateTimeFilter>;
-  icon?: Maybe<StringFilter>;
-  id?: Maybe<StringFilter>;
-  name?: Maybe<StringFilter>;
-  strategies?: Maybe<StringNullableListFilter>;
-  type?: Maybe<EnumTypeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
-};
-
 export type CategoryUpdateInput = {
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   icon?: Maybe<StringFieldUpdateOperationsInput>;
   id?: Maybe<StringFieldUpdateOperationsInput>;
   name?: Maybe<StringFieldUpdateOperationsInput>;
   strategies?: Maybe<CategoryUpdatestrategiesInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutCategoriesInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutCategoryInput>;
   type?: Maybe<EnumTypeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type CategoryUpdateManyMutationInput = {
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  icon?: Maybe<StringFieldUpdateOperationsInput>;
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  name?: Maybe<StringFieldUpdateOperationsInput>;
-  strategies?: Maybe<CategoryUpdatestrategiesInput>;
-  type?: Maybe<EnumTypeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type CategoryUpdateManyWithWhereWithoutTransactionsInput = {
-  data: CategoryUpdateManyMutationInput;
-  where: CategoryScalarWhereInput;
-};
-
-export type CategoryUpdateManyWithoutTransactionsInput = {
-  connect?: Maybe<Array<CategoryWhereUniqueInput>>;
-  connectOrCreate?: Maybe<Array<CategoryCreateOrConnectWithoutTransactionsInput>>;
-  create?: Maybe<Array<CategoryCreateWithoutTransactionsInput>>;
-  delete?: Maybe<Array<CategoryWhereUniqueInput>>;
-  deleteMany?: Maybe<Array<CategoryScalarWhereInput>>;
-  disconnect?: Maybe<Array<CategoryWhereUniqueInput>>;
-  set?: Maybe<Array<CategoryWhereUniqueInput>>;
-  update?: Maybe<Array<CategoryUpdateWithWhereUniqueWithoutTransactionsInput>>;
-  updateMany?: Maybe<Array<CategoryUpdateManyWithWhereWithoutTransactionsInput>>;
-  upsert?: Maybe<Array<CategoryUpsertWithWhereUniqueWithoutTransactionsInput>>;
-};
-
-export type CategoryUpdateWithWhereUniqueWithoutTransactionsInput = {
-  data: CategoryUpdateWithoutTransactionsInput;
-  where: CategoryWhereUniqueInput;
+export type CategoryUpdateOneRequiredWithoutTransactionsInput = {
+  connect?: Maybe<CategoryWhereUniqueInput>;
+  connectOrCreate?: Maybe<CategoryCreateOrConnectWithoutTransactionsInput>;
+  create?: Maybe<CategoryCreateWithoutTransactionsInput>;
+  update?: Maybe<CategoryUpdateWithoutTransactionsInput>;
+  upsert?: Maybe<CategoryUpsertWithoutTransactionsInput>;
 };
 
 export type CategoryUpdateWithoutTransactionsInput = {
@@ -148,10 +104,9 @@ export type CategoryUpdatestrategiesInput = {
   set?: Maybe<Array<Scalars['String']>>;
 };
 
-export type CategoryUpsertWithWhereUniqueWithoutTransactionsInput = {
+export type CategoryUpsertWithoutTransactionsInput = {
   create: CategoryCreateWithoutTransactionsInput;
   update: CategoryUpdateWithoutTransactionsInput;
-  where: CategoryWhereUniqueInput;
 };
 
 export type CategoryWhereInput = {
@@ -244,16 +199,24 @@ export type FloatFilter = {
 
 export type Mutation = {
   createOneCategory: Category;
+  createOneTransaction: Transaction;
   createOneWallet: Wallet;
   deleteOneCategory?: Maybe<Category>;
+  deleteOneTransaction?: Maybe<Transaction>;
   deleteOneWallet?: Maybe<Wallet>;
   updateOneCategory?: Maybe<Category>;
+  updateOneTransaction?: Maybe<Transaction>;
   updateOneWallet?: Maybe<Wallet>;
 };
 
 
 export type MutationCreateOneCategoryArgs = {
   data: CategoryCreateInput;
+};
+
+
+export type MutationCreateOneTransactionArgs = {
+  data: TransactionCreateInput;
 };
 
 
@@ -267,6 +230,11 @@ export type MutationDeleteOneCategoryArgs = {
 };
 
 
+export type MutationDeleteOneTransactionArgs = {
+  where: TransactionWhereUniqueInput;
+};
+
+
 export type MutationDeleteOneWalletArgs = {
   where: WalletWhereUniqueInput;
 };
@@ -275,6 +243,12 @@ export type MutationDeleteOneWalletArgs = {
 export type MutationUpdateOneCategoryArgs = {
   data: CategoryUpdateInput;
   where: CategoryWhereUniqueInput;
+};
+
+
+export type MutationUpdateOneTransactionArgs = {
+  data: TransactionUpdateInput;
+  where: TransactionWhereUniqueInput;
 };
 
 
@@ -333,11 +307,34 @@ export type NestedStringFilter = {
   startsWith?: Maybe<Scalars['String']>;
 };
 
+export type NestedStringNullableFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  not?: Maybe<NestedStringNullableFilter>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
+};
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   categories: Array<Category>;
   category?: Maybe<Category>;
+  topMonthlyWalletCategories?: Maybe<Array<TopCategory>>;
+  transaction?: Maybe<Transaction>;
+  transactions: Array<Transaction>;
   wallet?: Maybe<Wallet>;
+  walletMonthlyOverview: WalletMonthlyOverview;
   wallets: Array<Wallet>;
+  walletsStatistics: Array<WalletStatistics>;
 };
 
 
@@ -355,8 +352,35 @@ export type QueryCategoryArgs = {
 };
 
 
+export type QueryTopMonthlyWalletCategoriesArgs = {
+  date: Scalars['String'];
+  take?: Maybe<Scalars['Int']>;
+  walletId: Scalars['String'];
+};
+
+
+export type QueryTransactionArgs = {
+  where: TransactionWhereUniqueInput;
+};
+
+
+export type QueryTransactionsArgs = {
+  cursor?: Maybe<TransactionWhereUniqueInput>;
+  orderBy?: Maybe<Array<TransactionOrderByWithRelationInput>>;
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
+  where?: Maybe<TransactionWhereInput>;
+};
+
+
 export type QueryWalletArgs = {
   where: WalletWhereUniqueInput;
+};
+
+
+export type QueryWalletMonthlyOverviewArgs = {
+  date: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -364,6 +388,11 @@ export type QueryWalletsArgs = {
   cursor?: Maybe<WalletWhereUniqueInput>;
   skip?: Maybe<Scalars['Int']>;
   take?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryWalletsStatisticsArgs = {
+  where?: Maybe<WalletWhereInput>;
 };
 
 export enum QueryMode {
@@ -395,6 +424,21 @@ export type StringFilter = {
   startsWith?: Maybe<Scalars['String']>;
 };
 
+export type StringNullableFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  mode?: Maybe<QueryMode>;
+  not?: Maybe<NestedStringNullableFilter>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
+};
+
 export type StringNullableListFilter = {
   equals?: Maybe<Array<Scalars['String']>>;
   has?: Maybe<Scalars['String']>;
@@ -403,9 +447,59 @@ export type StringNullableListFilter = {
   isEmpty?: Maybe<Scalars['Boolean']>;
 };
 
-export type TransactionCreateManyWalletInput = {
+export type TopCategory = {
+  amount: Scalars['Float'];
+  category: Category;
+  transactionsCount: Scalars['Int'];
+};
+
+export type Transaction = {
+  amount: Scalars['Float'];
+  category: Category;
+  date: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  title: Scalars['String'];
+  type: Type;
+  wallet: Wallet;
+};
+
+export type TransactionCreateInput = {
+  amount?: Maybe<Scalars['Float']>;
+  category: CategoryCreateNestedOneWithoutTransactionsInput;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  date: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+  type?: Maybe<Type>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  wallet: WalletCreateNestedOneWithoutTransactionsInput;
+};
+
+export type TransactionCreateManyCategoryInput = {
   amount?: Maybe<Scalars['Float']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  date: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+  type?: Maybe<Type>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  walletId: Scalars['String'];
+};
+
+export type TransactionCreateManyCategoryInputEnvelope = {
+  data?: Maybe<Array<TransactionCreateManyCategoryInput>>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
+};
+
+export type TransactionCreateManyWalletInput = {
+  amount?: Maybe<Scalars['Float']>;
+  categoryId: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  date: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   type?: Maybe<Type>;
@@ -417,10 +511,11 @@ export type TransactionCreateManyWalletInputEnvelope = {
   skipDuplicates?: Maybe<Scalars['Boolean']>;
 };
 
-export type TransactionCreateNestedManyWithoutCategoriesInput = {
+export type TransactionCreateNestedManyWithoutCategoryInput = {
   connect?: Maybe<Array<TransactionWhereUniqueInput>>;
-  connectOrCreate?: Maybe<Array<TransactionCreateOrConnectWithoutCategoriesInput>>;
-  create?: Maybe<Array<TransactionCreateWithoutCategoriesInput>>;
+  connectOrCreate?: Maybe<Array<TransactionCreateOrConnectWithoutCategoryInput>>;
+  create?: Maybe<Array<TransactionCreateWithoutCategoryInput>>;
+  createMany?: Maybe<TransactionCreateManyCategoryInputEnvelope>;
 };
 
 export type TransactionCreateNestedManyWithoutWalletInput = {
@@ -430,8 +525,8 @@ export type TransactionCreateNestedManyWithoutWalletInput = {
   createMany?: Maybe<TransactionCreateManyWalletInputEnvelope>;
 };
 
-export type TransactionCreateOrConnectWithoutCategoriesInput = {
-  create: TransactionCreateWithoutCategoriesInput;
+export type TransactionCreateOrConnectWithoutCategoryInput = {
+  create: TransactionCreateWithoutCategoryInput;
   where: TransactionWhereUniqueInput;
 };
 
@@ -440,20 +535,24 @@ export type TransactionCreateOrConnectWithoutWalletInput = {
   where: TransactionWhereUniqueInput;
 };
 
-export type TransactionCreateWithoutCategoriesInput = {
+export type TransactionCreateWithoutCategoryInput = {
   amount?: Maybe<Scalars['Float']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  date: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   type?: Maybe<Type>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  wallet: WalletCreateNestedOneWithoutTransactionInput;
+  wallet: WalletCreateNestedOneWithoutTransactionsInput;
 };
 
 export type TransactionCreateWithoutWalletInput = {
   amount?: Maybe<Scalars['Float']>;
-  categories?: Maybe<CategoryCreateNestedManyWithoutTransactionsInput>;
+  category: CategoryCreateNestedOneWithoutTransactionsInput;
   createdAt?: Maybe<Scalars['DateTime']>;
+  date: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   type?: Maybe<Type>;
@@ -470,12 +569,30 @@ export type TransactionOrderByRelationAggregateInput = {
   _count?: Maybe<SortOrder>;
 };
 
+export type TransactionOrderByWithRelationInput = {
+  amount?: Maybe<SortOrder>;
+  category?: Maybe<CategoryOrderByWithRelationInput>;
+  categoryId?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  date?: Maybe<SortOrder>;
+  description?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  title?: Maybe<SortOrder>;
+  type?: Maybe<SortOrder>;
+  updatedAt?: Maybe<SortOrder>;
+  wallet?: Maybe<WalletOrderByWithRelationInput>;
+  walletId?: Maybe<SortOrder>;
+};
+
 export type TransactionScalarWhereInput = {
   AND?: Maybe<Array<TransactionScalarWhereInput>>;
   NOT?: Maybe<Array<TransactionScalarWhereInput>>;
   OR?: Maybe<Array<TransactionScalarWhereInput>>;
   amount?: Maybe<FloatFilter>;
+  categoryId?: Maybe<StringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
+  date?: Maybe<DateTimeFilter>;
+  description?: Maybe<StringNullableFilter>;
   id?: Maybe<StringFilter>;
   title?: Maybe<StringFilter>;
   type?: Maybe<EnumTypeFilter>;
@@ -483,16 +600,31 @@ export type TransactionScalarWhereInput = {
   walletId?: Maybe<StringFilter>;
 };
 
+export type TransactionUpdateInput = {
+  amount?: Maybe<FloatFieldUpdateOperationsInput>;
+  category?: Maybe<CategoryUpdateOneRequiredWithoutTransactionsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  date?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  description?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  id?: Maybe<StringFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  type?: Maybe<EnumTypeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  wallet?: Maybe<WalletUpdateOneRequiredWithoutTransactionsInput>;
+};
+
 export type TransactionUpdateManyMutationInput = {
   amount?: Maybe<FloatFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  date?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  description?: Maybe<NullableStringFieldUpdateOperationsInput>;
   id?: Maybe<StringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
   type?: Maybe<EnumTypeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type TransactionUpdateManyWithWhereWithoutCategoriesInput = {
+export type TransactionUpdateManyWithWhereWithoutCategoryInput = {
   data: TransactionUpdateManyMutationInput;
   where: TransactionScalarWhereInput;
 };
@@ -502,17 +634,18 @@ export type TransactionUpdateManyWithWhereWithoutWalletInput = {
   where: TransactionScalarWhereInput;
 };
 
-export type TransactionUpdateManyWithoutCategoriesInput = {
+export type TransactionUpdateManyWithoutCategoryInput = {
   connect?: Maybe<Array<TransactionWhereUniqueInput>>;
-  connectOrCreate?: Maybe<Array<TransactionCreateOrConnectWithoutCategoriesInput>>;
-  create?: Maybe<Array<TransactionCreateWithoutCategoriesInput>>;
+  connectOrCreate?: Maybe<Array<TransactionCreateOrConnectWithoutCategoryInput>>;
+  create?: Maybe<Array<TransactionCreateWithoutCategoryInput>>;
+  createMany?: Maybe<TransactionCreateManyCategoryInputEnvelope>;
   delete?: Maybe<Array<TransactionWhereUniqueInput>>;
   deleteMany?: Maybe<Array<TransactionScalarWhereInput>>;
   disconnect?: Maybe<Array<TransactionWhereUniqueInput>>;
   set?: Maybe<Array<TransactionWhereUniqueInput>>;
-  update?: Maybe<Array<TransactionUpdateWithWhereUniqueWithoutCategoriesInput>>;
-  updateMany?: Maybe<Array<TransactionUpdateManyWithWhereWithoutCategoriesInput>>;
-  upsert?: Maybe<Array<TransactionUpsertWithWhereUniqueWithoutCategoriesInput>>;
+  update?: Maybe<Array<TransactionUpdateWithWhereUniqueWithoutCategoryInput>>;
+  updateMany?: Maybe<Array<TransactionUpdateManyWithWhereWithoutCategoryInput>>;
+  upsert?: Maybe<Array<TransactionUpsertWithWhereUniqueWithoutCategoryInput>>;
 };
 
 export type TransactionUpdateManyWithoutWalletInput = {
@@ -529,8 +662,8 @@ export type TransactionUpdateManyWithoutWalletInput = {
   upsert?: Maybe<Array<TransactionUpsertWithWhereUniqueWithoutWalletInput>>;
 };
 
-export type TransactionUpdateWithWhereUniqueWithoutCategoriesInput = {
-  data: TransactionUpdateWithoutCategoriesInput;
+export type TransactionUpdateWithWhereUniqueWithoutCategoryInput = {
+  data: TransactionUpdateWithoutCategoryInput;
   where: TransactionWhereUniqueInput;
 };
 
@@ -539,29 +672,33 @@ export type TransactionUpdateWithWhereUniqueWithoutWalletInput = {
   where: TransactionWhereUniqueInput;
 };
 
-export type TransactionUpdateWithoutCategoriesInput = {
+export type TransactionUpdateWithoutCategoryInput = {
   amount?: Maybe<FloatFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  date?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  description?: Maybe<NullableStringFieldUpdateOperationsInput>;
   id?: Maybe<StringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
   type?: Maybe<EnumTypeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  wallet?: Maybe<WalletUpdateOneRequiredWithoutTransactionInput>;
+  wallet?: Maybe<WalletUpdateOneRequiredWithoutTransactionsInput>;
 };
 
 export type TransactionUpdateWithoutWalletInput = {
   amount?: Maybe<FloatFieldUpdateOperationsInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutTransactionsInput>;
+  category?: Maybe<CategoryUpdateOneRequiredWithoutTransactionsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  date?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  description?: Maybe<NullableStringFieldUpdateOperationsInput>;
   id?: Maybe<StringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
   type?: Maybe<EnumTypeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type TransactionUpsertWithWhereUniqueWithoutCategoriesInput = {
-  create: TransactionCreateWithoutCategoriesInput;
-  update: TransactionUpdateWithoutCategoriesInput;
+export type TransactionUpsertWithWhereUniqueWithoutCategoryInput = {
+  create: TransactionCreateWithoutCategoryInput;
+  update: TransactionUpdateWithoutCategoryInput;
   where: TransactionWhereUniqueInput;
 };
 
@@ -576,8 +713,11 @@ export type TransactionWhereInput = {
   NOT?: Maybe<Array<TransactionWhereInput>>;
   OR?: Maybe<Array<TransactionWhereInput>>;
   amount?: Maybe<FloatFilter>;
-  categories?: Maybe<CategoryListRelationFilter>;
+  category?: Maybe<CategoryWhereInput>;
+  categoryId?: Maybe<StringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
+  date?: Maybe<DateTimeFilter>;
+  description?: Maybe<StringNullableFilter>;
   id?: Maybe<StringFilter>;
   title?: Maybe<StringFilter>;
   type?: Maybe<EnumTypeFilter>;
@@ -610,22 +750,22 @@ export type WalletCreateInput = {
   id?: Maybe<Scalars['String']>;
   initialBalance?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
-  transaction?: Maybe<TransactionCreateNestedManyWithoutWalletInput>;
+  transactions?: Maybe<TransactionCreateNestedManyWithoutWalletInput>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type WalletCreateNestedOneWithoutTransactionInput = {
+export type WalletCreateNestedOneWithoutTransactionsInput = {
   connect?: Maybe<WalletWhereUniqueInput>;
-  connectOrCreate?: Maybe<WalletCreateOrConnectWithoutTransactionInput>;
-  create?: Maybe<WalletCreateWithoutTransactionInput>;
+  connectOrCreate?: Maybe<WalletCreateOrConnectWithoutTransactionsInput>;
+  create?: Maybe<WalletCreateWithoutTransactionsInput>;
 };
 
-export type WalletCreateOrConnectWithoutTransactionInput = {
-  create: WalletCreateWithoutTransactionInput;
+export type WalletCreateOrConnectWithoutTransactionsInput = {
+  create: WalletCreateWithoutTransactionsInput;
   where: WalletWhereUniqueInput;
 };
 
-export type WalletCreateWithoutTransactionInput = {
+export type WalletCreateWithoutTransactionsInput = {
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   icon: Scalars['String'];
@@ -635,6 +775,28 @@ export type WalletCreateWithoutTransactionInput = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type WalletMonthlyOverview = {
+  balance: Scalars['Float'];
+  expenses: Scalars['Float'];
+  incomes: Scalars['Float'];
+};
+
+export type WalletOrderByWithRelationInput = {
+  color?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  icon?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  initialBalance?: Maybe<SortOrder>;
+  name?: Maybe<SortOrder>;
+  transactions?: Maybe<TransactionOrderByRelationAggregateInput>;
+  updatedAt?: Maybe<SortOrder>;
+};
+
+export type WalletStatistics = {
+  totalAmount: Scalars['Float'];
+  wallet: Wallet;
+};
+
 export type WalletUpdateInput = {
   color?: Maybe<EnumColorFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
@@ -642,19 +804,19 @@ export type WalletUpdateInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   initialBalance?: Maybe<FloatFieldUpdateOperationsInput>;
   name?: Maybe<StringFieldUpdateOperationsInput>;
-  transaction?: Maybe<TransactionUpdateManyWithoutWalletInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutWalletInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type WalletUpdateOneRequiredWithoutTransactionInput = {
+export type WalletUpdateOneRequiredWithoutTransactionsInput = {
   connect?: Maybe<WalletWhereUniqueInput>;
-  connectOrCreate?: Maybe<WalletCreateOrConnectWithoutTransactionInput>;
-  create?: Maybe<WalletCreateWithoutTransactionInput>;
-  update?: Maybe<WalletUpdateWithoutTransactionInput>;
-  upsert?: Maybe<WalletUpsertWithoutTransactionInput>;
+  connectOrCreate?: Maybe<WalletCreateOrConnectWithoutTransactionsInput>;
+  create?: Maybe<WalletCreateWithoutTransactionsInput>;
+  update?: Maybe<WalletUpdateWithoutTransactionsInput>;
+  upsert?: Maybe<WalletUpsertWithoutTransactionsInput>;
 };
 
-export type WalletUpdateWithoutTransactionInput = {
+export type WalletUpdateWithoutTransactionsInput = {
   color?: Maybe<EnumColorFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   icon?: Maybe<StringFieldUpdateOperationsInput>;
@@ -664,9 +826,9 @@ export type WalletUpdateWithoutTransactionInput = {
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type WalletUpsertWithoutTransactionInput = {
-  create: WalletCreateWithoutTransactionInput;
-  update: WalletUpdateWithoutTransactionInput;
+export type WalletUpsertWithoutTransactionsInput = {
+  create: WalletCreateWithoutTransactionsInput;
+  update: WalletUpdateWithoutTransactionsInput;
 };
 
 export type WalletWhereInput = {
@@ -679,7 +841,7 @@ export type WalletWhereInput = {
   id?: Maybe<StringFilter>;
   initialBalance?: Maybe<FloatFilter>;
   name?: Maybe<StringFilter>;
-  transaction?: Maybe<TransactionListRelationFilter>;
+  transactions?: Maybe<TransactionListRelationFilter>;
   updatedAt?: Maybe<DateTimeFilter>;
 };
 
@@ -690,7 +852,24 @@ export type WalletWhereUniqueInput = {
 
 export type CategorySnippetFragment = Pick<Category, 'id' | 'name' | 'icon' | 'type' | 'strategies'>;
 
+export type TopCategorySnippetFragment = (
+  Pick<TopCategory, 'amount' | 'transactionsCount'>
+  & { category: CategorySnippetFragment }
+);
+
+export type TransactionSnippetFragment = (
+  Pick<Transaction, 'id' | 'title' | 'date' | 'amount' | 'description'>
+  & { category: Pick<Category, 'id' | 'name' | 'icon'>, wallet: Pick<Wallet, 'id' | 'name'> }
+);
+
 export type WalletSnippetFragment = Pick<Wallet, 'id' | 'name' | 'icon' | 'color' | 'initialBalance'>;
+
+export type WalletMonthlyOverviewSnippetFragment = Pick<WalletMonthlyOverview, 'incomes' | 'expenses' | 'balance'>;
+
+export type WalletStatisticsSnippetFragment = (
+  Pick<WalletStatistics, 'totalAmount'>
+  & { wallet: WalletSnippetFragment }
+);
 
 export type CreateCategoryMutationVariables = Exact<{
   data: CategoryCreateInput;
@@ -698,6 +877,13 @@ export type CreateCategoryMutationVariables = Exact<{
 
 
 export type CreateCategoryMutation = { createOneCategory: CategorySnippetFragment };
+
+export type CreateTransactionMutationVariables = Exact<{
+  data: TransactionCreateInput;
+}>;
+
+
+export type CreateTransactionMutation = { createOneTransaction: TransactionSnippetFragment };
 
 export type CreateWalletMutationVariables = Exact<{
   data: WalletCreateInput;
@@ -713,6 +899,13 @@ export type DeleteCategoryMutationVariables = Exact<{
 
 export type DeleteCategoryMutation = { deleteOneCategory?: Maybe<Pick<Category, 'id'>> };
 
+export type DeleteTransactionMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteTransactionMutation = { deleteOneTransaction?: Maybe<Pick<Transaction, 'id'>> };
+
 export type DeleteWalletMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -727,6 +920,14 @@ export type UpdateCategoryMutationVariables = Exact<{
 
 
 export type UpdateCategoryMutation = { updateOneCategory?: Maybe<CategorySnippetFragment> };
+
+export type UpdateTransactionMutationVariables = Exact<{
+  id: Scalars['String'];
+  data: TransactionUpdateInput;
+}>;
+
+
+export type UpdateTransactionMutation = { updateOneTransaction?: Maybe<TransactionSnippetFragment> };
 
 export type UpdateWalletMutationVariables = Exact<{
   id: Scalars['String'];
@@ -745,11 +946,35 @@ export type CategoriesQueryVariables = Exact<{
 export type CategoriesQuery = { categories: Array<CategorySnippetFragment> };
 
 export type CategoryQueryVariables = Exact<{
-  where: CategoryWhereUniqueInput;
+  id: Scalars['String'];
 }>;
 
 
 export type CategoryQuery = { category?: Maybe<CategorySnippetFragment> };
+
+export type TopMonthlyWalletCategoriesQueryVariables = Exact<{
+  walletId: Scalars['String'];
+  date: Scalars['String'];
+  take?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type TopMonthlyWalletCategoriesQuery = { topMonthlyWalletCategories?: Maybe<Array<TopCategorySnippetFragment>> };
+
+export type TransactionQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type TransactionQuery = { transaction?: Maybe<TransactionSnippetFragment> };
+
+export type TransactionsQueryVariables = Exact<{
+  where?: Maybe<TransactionWhereInput>;
+  orderBy?: Maybe<Array<TransactionOrderByWithRelationInput> | TransactionOrderByWithRelationInput>;
+}>;
+
+
+export type TransactionsQuery = { transactions: Array<TransactionSnippetFragment> };
 
 export type WalletQueryVariables = Exact<{
   id: Scalars['String'];
@@ -758,10 +983,18 @@ export type WalletQueryVariables = Exact<{
 
 export type WalletQuery = { wallet?: Maybe<WalletSnippetFragment> };
 
-export type WalletsQueryVariables = Exact<{ [key: string]: never; }>;
+export type WalletMonthlyOverviewQueryVariables = Exact<{
+  id: Scalars['String'];
+  date: Scalars['String'];
+}>;
 
 
-export type WalletsQuery = { wallets: Array<WalletSnippetFragment> };
+export type WalletMonthlyOverviewQuery = { walletMonthlyOverview: WalletMonthlyOverviewSnippetFragment };
+
+export type WalletsStatisticsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WalletsStatisticsQuery = { walletsStatistics: Array<WalletStatisticsSnippetFragment> };
 
 export const CategorySnippetFragmentDoc = gql`
     fragment CategorySnippet on Category {
@@ -770,6 +1003,40 @@ export const CategorySnippetFragmentDoc = gql`
   icon
   type
   strategies
+}
+    `;
+export const TopCategorySnippetFragmentDoc = gql`
+    fragment TopCategorySnippet on TopCategory {
+  category {
+    ...CategorySnippet
+  }
+  amount
+  transactionsCount
+}
+    ${CategorySnippetFragmentDoc}`;
+export const TransactionSnippetFragmentDoc = gql`
+    fragment TransactionSnippet on Transaction {
+  id
+  title
+  date
+  amount
+  description
+  category {
+    id
+    name
+    icon
+  }
+  wallet {
+    id
+    name
+  }
+}
+    `;
+export const WalletMonthlyOverviewSnippetFragmentDoc = gql`
+    fragment WalletMonthlyOverviewSnippet on WalletMonthlyOverview {
+  incomes
+  expenses
+  balance
 }
     `;
 export const WalletSnippetFragmentDoc = gql`
@@ -781,6 +1048,14 @@ export const WalletSnippetFragmentDoc = gql`
   initialBalance
 }
     `;
+export const WalletStatisticsSnippetFragmentDoc = gql`
+    fragment WalletStatisticsSnippet on WalletStatistics {
+  wallet {
+    ...WalletSnippet
+  }
+  totalAmount
+}
+    ${WalletSnippetFragmentDoc}`;
 export const CreateCategoryDocument = gql`
     mutation CreateCategory($data: CategoryCreateInput!) {
   createOneCategory(data: $data) {
@@ -791,6 +1066,17 @@ export const CreateCategoryDocument = gql`
 
 export function useCreateCategoryMutation() {
   return Urql.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument);
+};
+export const CreateTransactionDocument = gql`
+    mutation CreateTransaction($data: TransactionCreateInput!) {
+  createOneTransaction(data: $data) {
+    ...TransactionSnippet
+  }
+}
+    ${TransactionSnippetFragmentDoc}`;
+
+export function useCreateTransactionMutation() {
+  return Urql.useMutation<CreateTransactionMutation, CreateTransactionMutationVariables>(CreateTransactionDocument);
 };
 export const CreateWalletDocument = gql`
     mutation CreateWallet($data: WalletCreateInput!) {
@@ -814,6 +1100,17 @@ export const DeleteCategoryDocument = gql`
 export function useDeleteCategoryMutation() {
   return Urql.useMutation<DeleteCategoryMutation, DeleteCategoryMutationVariables>(DeleteCategoryDocument);
 };
+export const DeleteTransactionDocument = gql`
+    mutation DeleteTransaction($id: String!) {
+  deleteOneTransaction(where: {id: $id}) {
+    id
+  }
+}
+    `;
+
+export function useDeleteTransactionMutation() {
+  return Urql.useMutation<DeleteTransactionMutation, DeleteTransactionMutationVariables>(DeleteTransactionDocument);
+};
 export const DeleteWalletDocument = gql`
     mutation DeleteWallet($id: String!) {
   deleteOneWallet(where: {id: $id}) {
@@ -835,6 +1132,17 @@ export const UpdateCategoryDocument = gql`
 
 export function useUpdateCategoryMutation() {
   return Urql.useMutation<UpdateCategoryMutation, UpdateCategoryMutationVariables>(UpdateCategoryDocument);
+};
+export const UpdateTransactionDocument = gql`
+    mutation UpdateTransaction($id: String!, $data: TransactionUpdateInput!) {
+  updateOneTransaction(data: $data, where: {id: $id}) {
+    ...TransactionSnippet
+  }
+}
+    ${TransactionSnippetFragmentDoc}`;
+
+export function useUpdateTransactionMutation() {
+  return Urql.useMutation<UpdateTransactionMutation, UpdateTransactionMutationVariables>(UpdateTransactionDocument);
 };
 export const UpdateWalletDocument = gql`
     mutation UpdateWallet($id: String!, $data: WalletUpdateInput!) {
@@ -859,8 +1167,8 @@ export function useCategoriesQuery(options: Omit<Urql.UseQueryArgs<CategoriesQue
   return Urql.useQuery<CategoriesQuery>({ query: CategoriesDocument, ...options });
 };
 export const CategoryDocument = gql`
-    query Category($where: CategoryWhereUniqueInput!) {
-  category(where: $where) {
+    query Category($id: String!) {
+  category(where: {id: $id}) {
     ...CategorySnippet
   }
 }
@@ -868,6 +1176,39 @@ export const CategoryDocument = gql`
 
 export function useCategoryQuery(options: Omit<Urql.UseQueryArgs<CategoryQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<CategoryQuery>({ query: CategoryDocument, ...options });
+};
+export const TopMonthlyWalletCategoriesDocument = gql`
+    query TopMonthlyWalletCategories($walletId: String!, $date: String!, $take: Int) {
+  topMonthlyWalletCategories(walletId: $walletId, date: $date, take: $take) {
+    ...TopCategorySnippet
+  }
+}
+    ${TopCategorySnippetFragmentDoc}`;
+
+export function useTopMonthlyWalletCategoriesQuery(options: Omit<Urql.UseQueryArgs<TopMonthlyWalletCategoriesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<TopMonthlyWalletCategoriesQuery>({ query: TopMonthlyWalletCategoriesDocument, ...options });
+};
+export const TransactionDocument = gql`
+    query Transaction($id: String!) {
+  transaction(where: {id: $id}) {
+    ...TransactionSnippet
+  }
+}
+    ${TransactionSnippetFragmentDoc}`;
+
+export function useTransactionQuery(options: Omit<Urql.UseQueryArgs<TransactionQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<TransactionQuery>({ query: TransactionDocument, ...options });
+};
+export const TransactionsDocument = gql`
+    query Transactions($where: TransactionWhereInput, $orderBy: [TransactionOrderByWithRelationInput!]) {
+  transactions(where: $where, orderBy: $orderBy) {
+    ...TransactionSnippet
+  }
+}
+    ${TransactionSnippetFragmentDoc}`;
+
+export function useTransactionsQuery(options: Omit<Urql.UseQueryArgs<TransactionsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<TransactionsQuery>({ query: TransactionsDocument, ...options });
 };
 export const WalletDocument = gql`
     query Wallet($id: String!) {
@@ -880,14 +1221,25 @@ export const WalletDocument = gql`
 export function useWalletQuery(options: Omit<Urql.UseQueryArgs<WalletQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<WalletQuery>({ query: WalletDocument, ...options });
 };
-export const WalletsDocument = gql`
-    query Wallets {
-  wallets {
-    ...WalletSnippet
+export const WalletMonthlyOverviewDocument = gql`
+    query WalletMonthlyOverview($id: String!, $date: String!) {
+  walletMonthlyOverview(id: $id, date: $date) {
+    ...WalletMonthlyOverviewSnippet
   }
 }
-    ${WalletSnippetFragmentDoc}`;
+    ${WalletMonthlyOverviewSnippetFragmentDoc}`;
 
-export function useWalletsQuery(options: Omit<Urql.UseQueryArgs<WalletsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<WalletsQuery>({ query: WalletsDocument, ...options });
+export function useWalletMonthlyOverviewQuery(options: Omit<Urql.UseQueryArgs<WalletMonthlyOverviewQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<WalletMonthlyOverviewQuery>({ query: WalletMonthlyOverviewDocument, ...options });
+};
+export const WalletsStatisticsDocument = gql`
+    query WalletsStatistics {
+  walletsStatistics {
+    ...WalletStatisticsSnippet
+  }
+}
+    ${WalletStatisticsSnippetFragmentDoc}`;
+
+export function useWalletsStatisticsQuery(options: Omit<Urql.UseQueryArgs<WalletsStatisticsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<WalletsStatisticsQuery>({ query: WalletsStatisticsDocument, ...options });
 };

@@ -1,0 +1,5 @@
+query Transaction($id: String!) {
+  transaction(where: { id: $id }) {
+    ...TransactionSnippet
+  }
+}

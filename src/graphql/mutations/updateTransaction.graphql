@@ -1,0 +1,5 @@
+mutation UpdateTransaction($id: String!, $data: TransactionUpdateInput!) {
+  updateOneTransaction(data: $data, where: { id: $id }) {
+    ...TransactionSnippet
+  }
+}
